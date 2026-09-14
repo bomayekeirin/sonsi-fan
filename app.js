@@ -34,7 +34,9 @@ newsList.innerHTML = NEWS.map(n => `
 // MUSIC
 discGrid.innerHTML = MUSIC.map((m,i) => `
   <button class="disc__card" data-i="${i}">
-    <div class="disc__art">ARTWORK（仮）</div>
+    <div class="disc__art">${m.art
+      ? `<img src="${esc(m.art)}" alt="${esc(m.name)}">`
+      : `ARTWORK（仮）`}</div>
     <p class="disc__name">${esc(m.name)}</p>
     <p class="disc__sub">${esc(m.sub)}</p>
   </button>`).join('');
@@ -92,10 +94,16 @@ burger.addEventListener('click', () => toggleMenu(!menu.classList.contains('is-o
 menu.querySelectorAll('.menu__nav a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
 
 // ヘッダー背景 / スティッキーCTA
+const heroLogo = document.querySelector('.hero__logo');
 const onScroll = () => {
   const y = window.scrollY;
   head.classList.toggle('is-solid', y > 40);
   cta.classList.toggle('is-show', y > window.innerHeight * .8);
+  // ヒーローの大ロゴが画面上端より上に出たらヘッダーをロゴ表示に切り替える
+  if (heroLogo) {
+    const passed = heroLogo.getBoundingClientRect().bottom <= 0;
+    document.body.classList.toggle('logo-in-head', passed);
+  }
 };
 window.addEventListener('scroll', onScroll, {passive:true});
 onScroll();
@@ -114,12 +122,24 @@ qaList.addEventListener('click', e => {
 // MUSIC モーダル
 const openModal = i => {
   const m = MUSIC[i];
-  modalArt.textContent = 'ARTWORK（仮）';
+  modalArt.innerHTML = m.art
+    ? `<img src="${esc(m.art)}" alt="${esc(m.name)}">`
+    : 'ARTWORK（仮）';
   modalName.textContent = m.name;
   modalSub.textContent = m.sub;
-  modalBody.textContent = m.body;
-  modalLinks.innerHTML = m.links.map(l =>
-    `<a href="${l.url}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join('');
+
+  const tracks = (m.tracks || []).length
+    ? `<ol class="tracklist">${m.tracks.map(t => `<li>${esc(t)}</li>`).join('')}</ol>`
+    : '';
+  modalBody.innerHTML = (m.note ? `<p class="modal__note">${esc(m.note)}</p>` : '') + tracks;
+
+  modalLinks.innerHTML = `
+    <p class="modal__linkhead">配信中</p>
+    <div class="svc">${(m.links || []).map(l => `
+      <a class="svc__card" href="${l.url}" target="_blank" rel="noopener">
+        <span class="svc__name">${esc(l.label)}</span>
+        <span class="svc__arrow">↗</span>
+      </a>`).join('')}</div>`;
   modal.classList.add('is-open');
   document.body.classList.add('is-locked');
   modalClose.focus();

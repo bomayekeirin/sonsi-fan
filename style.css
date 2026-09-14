@@ -51,7 +51,15 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   border-bottom:1px solid transparent;
 }
 .head.is-solid{background:rgba(0,0,0,.88);backdrop-filter:blur(10px);border-bottom-color:var(--line)}
-.head__logo img{width:58px}
+.head__brand{display:flex;align-items:center;min-width:0}
+.head__warn{
+  font-size:11px;letter-spacing:.02em;color:#fff;white-space:nowrap;
+  transition:opacity .3s var(--ease);
+}
+.head__logo{width:58px;position:absolute;left:var(--pad);opacity:0;
+  transition:opacity .3s var(--ease);pointer-events:none}
+body.logo-in-head .head__warn{opacity:0}
+body.logo-in-head .head__logo{opacity:1}
 .head__right{display:flex;align-items:center;gap:18px}
 .head__sns{display:none;gap:14px}
 .head__sns a{opacity:.8;transition:opacity .2s}
@@ -104,10 +112,10 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   text-indent:.34em;
 }
 .hero__kv{
-  width:100%;max-width:760px;margin:38px auto 0;border:1px solid var(--line);
-  aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;
-  color:var(--muted);font-size:11px;letter-spacing:.2em;
+  width:100%;max-width:760px;margin:38px auto 0;
+  aspect-ratio:3/2;overflow:hidden;
 }
+.hero__kv img{width:100%;height:100%;object-fit:cover}
 .hero__scroll{
   position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
   font-size:9px;letter-spacing:.3em;color:var(--muted);
@@ -397,4 +405,51 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 @media (min-width:768px){
   .board__login{grid-template-columns:1fr 1fr;max-width:520px}
+}
+
+
+/* ============================================================
+   MUSIC — ジャケット / 曲順 / 配信カード
+   ============================================================ */
+.disc__art{overflow:hidden;padding:0}
+.disc__art img{width:100%;height:100%;object-fit:cover}
+.modal__art{overflow:hidden;padding:0;border:1px solid var(--line)}
+.modal__art img{width:100%;height:100%;object-fit:cover}
+
+.modal__note{margin:0 0 18px;font-size:12px;color:var(--muted);line-height:1.9}
+
+.tracklist{list-style:none;counter-reset:t;margin:0;padding:0;border-top:1px solid var(--line)}
+.tracklist li{
+  counter-increment:t;display:flex;gap:14px;align-items:baseline;
+  border-bottom:1px solid var(--line);padding:12px 0;
+  font-size:13px;line-height:1.6;color:#fff;
+}
+.tracklist li::before{
+  content:counter(t,decimal-leading-zero);
+  font-family:var(--f-disp);font-size:12px;color:var(--muted);
+  flex:none;width:22px;letter-spacing:.04em;
+}
+
+.modal__linkhead{
+  font-size:10px;letter-spacing:.2em;color:var(--muted);margin:26px 0 10px;
+}
+.svc{display:grid;gap:8px;width:100%}
+.svc__card{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  border:1px solid var(--line);padding:14px 16px;
+  transition:background .2s,color .2s,border-color .2s;
+}
+.svc__card:hover{background:#fff;color:#000;border-color:#fff}
+.svc__name{font-size:13px;font-weight:500;letter-spacing:.02em}
+.svc__arrow{font-size:12px;opacity:.6}
+
+@media (min-width:768px){
+  .svc{grid-template-columns:1fr 1fr}
+}
+
+/* 配信カード用に既存のモーダルリンク指定を上書き */
+.modal__links{display:block;margin-top:0}
+.modal__links .svc__card{
+  border-radius:0;padding:14px 16px;font-size:13px;letter-spacing:normal;
+  border-color:var(--line);
 }

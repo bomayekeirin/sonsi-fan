@@ -18,10 +18,42 @@ const NEWS = [
 ];
 
 const MUSIC = [
-  {name:"TITLE 01", sub:"Single / 2026", body:"リリース情報の本文が入ります（仮）。収録曲、プロデューサー、リリース日などを記載します。", links:[{label:"Spotify",url:"#"},{label:"Apple Music",url:"#"},{label:"YouTube",url:"#"}]},
-  {name:"TITLE 02", sub:"EP / 2025",     body:"リリース情報の本文が入ります（仮）。", links:[{label:"Spotify",url:"#"},{label:"Apple Music",url:"#"}]},
-  {name:"TITLE 03", sub:"Single / 2025", body:"リリース情報の本文が入ります（仮）。", links:[{label:"Spotify",url:"#"}]},
-  {name:"TITLE 04", sub:"Single / 2024", body:"リリース情報の本文が入ります（仮）。", links:[{label:"SoundCloud",url:"#"}]}
+  {
+    name: "ニセモノ",
+    sub: "1st Album / 2026.06.10",
+    art: "jk-nisemono.jpg",
+    note: "全曲Koshyプロデュース。STUTS、Watsonが参加した全8曲。",
+    tracks: [
+      "BBA in da House",
+      "Koshy Freestyle (feat. Watson)",
+      "ニセモノ",
+      "OYJ",
+      "思い通り",
+      "もったいないじゃん",
+      "KANOYA",
+      "OYJ (Remix) (feat. Watson)"
+    ],
+    links: [
+      {label:"Apple Music",   url:"https://music.apple.com/jp/album/6772952116?ls=1&app=music&at=1l3vpUI&ct=LFV_6db0b3fb0503b63a69816a7a60b706b2&itscg=30440&itsct=catchall_p1&lId=215947485&cId=none&sr=1&src=Linkfire"},
+      {label:"Spotify",       url:"https://open.spotify.com/album/5W2uqjQruJyKWFfsnGMZ6h"},
+      {label:"LINE MUSIC",    url:"https://music.line.me/webapp/album/mb00000000055d276d"},
+      {label:"Amazon Music",  url:"http://music.amazon.co.jp/albums/B0H2VRV2N7?tag=lf_wmj-22&ie=UTF8&linkCode=as2&ascsubtag=6db0b3fb0503b63a69816a7a60b706b2&ref=dmm_acq_soc_jp_u_lfire_lp_x_6db0b3fb0503b63a69816a7a60b706b2"},
+      {label:"YouTube Music", url:"https://music.youtube.com/playlist?list=OLAK5uy_lPCmy-rJm5NIZxG745rVjS04jPlU-f4Bw&src=Linkfire&lId=0fb7c053-5f44-4f94-94c4-00997d7603ad&cId=d3d58fd7-4c47-11e6-9fd0-066c3e7a8751"}
+    ]
+  },
+  {
+    name: "BBA Spice",
+    sub: "Single / 2026.07.29 — Sonsi & STUTS",
+    art: "jk-bbaspice.jpg",
+    note: "「RAPSTAR 2025」で話題を呼んだ楽曲のスペシャルバージョン。",
+    tracks: ["BBA Spice"],
+    links: [
+      {label:"Apple Music",   url:"https://www.tunecore.co.jp/to/apple_music/1860477"},
+      {label:"Spotify",       url:"https://www.tunecore.co.jp/to/spotify/1860477"},
+      {label:"YouTube Music", url:"https://www.tunecore.co.jp/to/youtube_music_key/1860477"},
+      {label:"LINE MUSIC",    url:"https://www.tunecore.co.jp/to/line/1860477"}
+    ]
+  }
 ];
 
 const LIVE = [
