@@ -1,7 +1,7 @@
 {
   "name": "sonsi-fan",
   "main": "worker.js",
-  "compatibility_date": "2026-09-16",
+  "compatibility_date": "2026-09-14",
 
   // リポジトリ直下のファイルをそのまま静的配信する。
   // /api/ で始まるリクエストだけ worker.js が先に処理する。

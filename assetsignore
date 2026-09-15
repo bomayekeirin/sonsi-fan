@@ -1,6 +1,20 @@
+# バージョン管理・ビルド関連（絶対に公開しない）
+.git
+.git/**
+.github
+.github/**
+.wrangler
+.wrangler/**
+node_modules
+node_modules/**
+
+# サーバー側のコードと設定
 worker.js
 wrangler.jsonc
+wrangler.toml
 .assetsignore
+
+# 手順書・スキーマ（サイトの動作には不要）
 schema.sql
 README.md
 SETUP-auth.md
