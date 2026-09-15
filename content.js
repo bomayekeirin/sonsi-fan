@@ -89,18 +89,18 @@ const QA = [
   {q:"コミュニティには誰でも参加できますか？", a:"どなたでも参加できます。他のファンが安心して話せる場にするため、参加時のルールに同意いただいています。"}
 ];
 
-/* 動画（上にあるものほど新しい順で表示されます）
-   id … YouTubeのURL末尾。https://youtu.be/XXXX の XXXX 部分
+/* 動画
+   id    … YouTubeのURL末尾。https://youtu.be/XXXX の XXXX 部分
    title … 表示タイトル
-   date … 公開日（空にすると非表示） */
+   date  … "YYYY-MM-DD"。この日付で自動的に新しい順へ並びます */
 const VIDEOS = [
-  {id:"DznBr5sBEF0", title:"", date:""},
-  {id:"bQ2q8xxE79E", title:"", date:""},
-  {id:"v0LIoEpZc38", title:"", date:""},
-  {id:"Tmkhsiysva8", title:"", date:""},
-  {id:"_DTzIilcqxc", title:"Sonsi - 思い通り", date:""},
-  {id:"lEAXRI-PtEA", title:"Sonsi - Koshy Freestyle feat. Watson (Official Video)", date:""},
-  {id:"HiSAuO-KW-4", title:"Sonsi - KANOYA (Official Video)", date:""},
-  {id:"Qv_SjeEEww8", title:"Sonsi【地元密着・新曲披露】RAPSTAR 2025【HOOD STAGE】", date:""},
-  {id:"P5gMCLOTekg", title:"Sonsi - OYJ (Official Video)", date:""}
+  {id:"_DTzIilcqxc", title:"Sonsi - 思い通り (Official Video)", date:"2026-07-14"},
+  {id:"lEAXRI-PtEA", title:"Sonsi, Watson - Koshy Freestyle (Official Video)", date:"2026-06-16"},
+  {id:"HiSAuO-KW-4", title:"Sonsi - KANOYA (Official Video)", date:"2026-06-11"},
+  {id:"Tmkhsiysva8", title:"Watson, Sonsi - Real Love (Live at 日本武道館)", date:"2026-04-28"},
+  {id:"bQ2q8xxE79E", title:"Watson, Sonsi - Real Love (Official Video)", date:"2026-04-22"},
+  {id:"v0LIoEpZc38", title:"Sonsi - もったいないじゃん (Official Video)", date:"2026-04-01"},
+  {id:"P5gMCLOTekg", title:"Sonsi - OYJ (Official Video)", date:"2026-02-18"},
+  {id:"DznBr5sBEF0", title:"【Sonsi】RAPSTAR 2025 FINALS｜「BBA Spice」ライブパフォーマンス", date:"2025-12-18"},
+  {id:"Qv_SjeEEww8", title:"Sonsi【地元密着・新曲披露】RAPSTAR 2025【HOOD STAGE】", date:"2025-11-01"}
 ];

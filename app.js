@@ -41,10 +41,18 @@ discGrid.innerHTML = MUSIC.map((m,i) => `
     <p class="disc__sub">${esc(m.sub)}</p>
   </button>`).join('');
 
+// 日付表示の共通フォーマット
+const fmtDate = iso => {
+  const [y,m,d] = iso.split('-');
+  return `${y}.${m}.${d}`;
+};
+
 // VIDEO
 const videoList = document.getElementById('videoList');
 if (videoList && typeof VIDEOS !== 'undefined') {
-  videoList.innerHTML = VIDEOS.map(v => `
+  // 公開日の新しい順に並べ替える（日付が無いものは末尾）
+  const sorted = [...VIDEOS].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  videoList.innerHTML = sorted.map(v => `
     <article class="vid" data-id="${esc(v.id)}">
       <button class="vid__thumb" aria-label="${esc(v.title || '動画')}を再生">
         <img src="https://i.ytimg.com/vi/${esc(v.id)}/maxresdefault.jpg"
@@ -54,7 +62,7 @@ if (videoList && typeof VIDEOS !== 'undefined') {
       </button>
       <div class="vid__meta">
         ${v.title ? `<p class="vid__title">${esc(v.title)}</p>` : ''}
-        ${v.date ? `<p class="vid__date">${esc(v.date)}</p>` : ''}
+        ${v.date ? `<p class="vid__date">${fmtDate(v.date)}</p>` : ''}
         <a class="vid__ext" href="https://youtu.be/${esc(v.id)}" target="_blank" rel="noopener">YouTubeで見る</a>
       </div>
     </article>`).join('');
@@ -75,10 +83,6 @@ if (videoList && typeof VIDEOS !== 'undefined') {
 }
 
 // LIVE（日付で自動的に UPCOMING / PAST に振り分け、それぞれ並べ替える）
-const fmtDate = iso => {
-  const [y,m,d] = iso.split('-');
-  return `${y}.${m}.${d}`;
-};
 const liveCard = (l, past) => `
   <article class="lv${past ? ' is-past' : ''}">
     ${l.img ? `<div class="lv__img"><img src="${esc(l.img)}" alt="" loading="lazy"></div>` : ''}
