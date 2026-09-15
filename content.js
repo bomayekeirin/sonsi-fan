@@ -110,6 +110,7 @@ const VIDEOS = [
    url  … 投稿ページのURL。?stkn= や ?is_from= などのパラメータは消してOK
    date … "YYYY-MM-DD"。24時間以内ならNEWバッジが点滅します */
 const SOCIAL_POSTS = [
+  {type:"tt", url:"https://www.tiktok.com/@sonsi1230/video/7667598144275795208", date:"2026-07-29"},
   {type:"ig", url:"https://www.instagram.com/reel/DbV0EWIPaKU/", date:"2026-07-29"},
   {type:"ig", url:"https://www.instagram.com/p/DbLA2ZIgFCx/", date:"2026-07-24"},
   {type:"ig", url:"https://www.instagram.com/reel/DaxW_3-ADHg/", date:"2026-07-14"},
@@ -128,4 +129,10 @@ const SOCIAL_POSTS = [
   {type:"ig", url:"https://www.instagram.com/reel/DU7W4Ghj8Mp/", date:"2026-02-19"},
   {type:"ig", url:"https://www.instagram.com/p/DUUuSR8D04p/", date:"2026-02-04"},
   {type:"ig", url:"https://www.instagram.com/p/DUUuNJFD0gD/", date:"2026-02-04"},
+  {type:"tt", url:"https://www.tiktok.com/@sonsi1230/video/7662323931554123015", date:"2026-07-14"},
+  {type:"tt", url:"https://www.tiktok.com/@sonsi1230/video/7655729957427039506", date:"2026-06-27"},
+  {type:"tt", url:"https://www.tiktok.com/@sonsi1230/video/7651932940774968594", date:"2026-06-17"},
+  {type:"tt", url:"https://www.tiktok.com/@sonsi1230/video/7650075834933366023", date:"2026-06-11"},
+  {type:"tt", url:"https://www.tiktok.com/@sonsi1230/video/7649411765582777607", date:"2026-06-10"},
+  {type:"tt", url:"https://www.tiktok.com/@sonsi1230/video/7648222122237594887", date:"2026-06-06"},
 ];
