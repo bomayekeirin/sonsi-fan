@@ -163,10 +163,11 @@ body.logo-in-head .head__logo{opacity:1}
    ============================================================ */
 .about{display:grid;gap:26px}
 .about__img{
-  border:1px solid var(--line);aspect-ratio:3/4;
+  aspect-ratio:4/3;overflow:hidden;background:#111;
   display:flex;align-items:center;justify-content:center;
   color:var(--muted);font-size:11px;letter-spacing:.2em;
 }
+.about__img img{width:100%;height:100%;object-fit:cover;display:block}
 .about p{margin:0 0 16px;max-width:60ch}
 .about dl{margin:22px 0 0;border-top:1px solid var(--line);font-size:12px}
 .about dl div{display:flex;gap:16px;border-bottom:1px solid var(--line);padding:10px 0}
@@ -512,3 +513,58 @@ body.logo-in-head .head__logo{
 @media (prefers-reduced-motion:reduce){
   .head__warn,.head__logo{transition-delay:0s;filter:none;transform:none}
 }
+
+/* ============================================================
+   VIDEO
+   ============================================================ */
+.vid__grid{display:grid;gap:26px}
+.vid{display:flex;flex-direction:column}
+
+.vid__thumb,.vid__player{
+  position:relative;width:100%;aspect-ratio:16/9;
+  background:#111;overflow:hidden;display:block;padding:0;border:0;
+}
+.vid__thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.vid__player iframe{width:100%;height:100%;border:0;display:block}
+
+.vid__play{
+  position:absolute;inset:0;margin:auto;width:54px;height:54px;
+  border:1px solid rgba(255,255,255,.85);border-radius:50%;
+  background:rgba(0,0,0,.35);backdrop-filter:blur(2px);
+  transition:background .2s,border-color .2s;
+}
+.vid__play::after{
+  content:"";position:absolute;top:50%;left:calc(50% + 2px);
+  transform:translate(-50%,-50%);
+  border-style:solid;border-width:8px 0 8px 13px;
+  border-color:transparent transparent transparent #fff;
+}
+.vid__thumb:hover .vid__play{background:rgba(0,0,0,.6);border-color:#fff}
+
+.vid__meta{padding-top:11px}
+.vid__title{margin:0 0 4px;font-size:13px;font-weight:500;line-height:1.65}
+.vid__date{margin:0 0 4px;font-size:10px;color:var(--muted);letter-spacing:.08em}
+.vid__ext{font-size:10px;color:var(--muted);letter-spacing:.08em;
+  border-bottom:1px solid var(--line);padding-bottom:2px}
+.vid__ext:hover{color:#fff}
+
+@media (min-width:768px){
+  .vid__grid{grid-template-columns:repeat(2,1fr);gap:32px 20px}
+}
+
+/* ABOUT — 出典表記とサイト紹介 */
+.about__src{
+  margin-top:20px;font-size:10px;color:var(--muted);line-height:1.9;font-weight:400;
+}
+.about__src a{border-bottom:1px solid var(--line)}
+.about__src a:hover{color:#fff}
+
+.siteabout{
+  margin-top:44px;border:1px solid var(--line);padding:24px 20px;
+}
+.siteabout h3{
+  font-family:var(--f-body);font-weight:700;font-size:14px;margin:0 0 12px;letter-spacing:.02em;
+}
+.siteabout p{margin:0 0 12px;font-size:12px;color:var(--muted);line-height:1.95}
+.siteabout p:last-child{margin-bottom:0}
+@media (min-width:768px){ .siteabout{padding:32px 34px} }
