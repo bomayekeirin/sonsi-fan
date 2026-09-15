@@ -134,13 +134,20 @@ qaList.innerHTML = QA.map((item,i) => `
 /* ============================================================
    BEHAVIOR
    ============================================================ */
-// スプラッシュ
+// スプラッシュ → メイン画面への段階的な移行
+//  1. 大ロゴをしばらく見せる
+//  2. ゆっくりフェードアウトし、ヘッダーと黒い背景だけが残る
+//  3. 少し置いてから、ヒーローのロゴ・タグライン・キービジュアルが同時に浮かび上がる
+document.body.classList.add('is-loading');
 window.addEventListener('load', () => {
   setTimeout(() => {
-    splash.classList.add('is-out');
+    splash.classList.add('is-out');                 // フェードアウト 1.0秒
     document.body.classList.remove('is-locked');
-    setTimeout(() => splash.remove(), 600);
-  }, 1500);
+    setTimeout(() => {
+      splash.remove();
+      document.body.classList.remove('is-loading'); // ヒーローが浮かび上がる
+    }, 1000);
+  }, 1200);
 });
 
 // メニュー

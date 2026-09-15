@@ -38,7 +38,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 #splash img{width:min(46vw,230px);opacity:0;transform:translateY(8px);
   animation:splashIn 1.05s var(--ease) .15s forwards}
 @keyframes splashIn{to{opacity:1;transform:none}}
-#splash.is-out{opacity:0;pointer-events:none;transition:opacity .55s var(--ease)}
+#splash.is-out{opacity:0;pointer-events:none;transition:opacity .9s var(--ease)}
 
 /* ============================================================
    HEADER
@@ -612,4 +612,28 @@ body.logo-in-head .head__logo{
 @media (min-width:768px){
   .lv{gap:24px;padding:24px 0}
   .lv__img{width:120px}
+}
+
+/* ============================================================
+   ローディング明け — ヒーローが遅れて浮かび上がる
+   ============================================================ */
+.hero__logo,
+.hero__tag,
+.hero__kv,
+.hero__scroll{
+  transition:opacity 1.15s var(--ease),transform 1.15s var(--ease),filter 1.15s var(--ease);
+}
+body.is-loading .hero__logo,
+body.is-loading .hero__tag,
+body.is-loading .hero__kv,
+body.is-loading .hero__scroll{
+  opacity:0;transform:translateY(14px);filter:blur(6px);
+  transition:none;
+}
+.hero__scroll{transition-delay:.35s}
+
+@media (prefers-reduced-motion:reduce){
+  .hero__logo,.hero__tag,.hero__kv,.hero__scroll{
+    transition:none;filter:none;transform:none;
+  }
 }
