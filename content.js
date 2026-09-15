@@ -56,9 +56,29 @@ const MUSIC = [
   }
 ];
 
+/* ライブ・出演情報
+   date … "YYYY-MM-DD"（この日付を過ぎると自動でPASTへ移動します）
+   img  … フライヤー画像。不要なら空文字
+   url  … チケットや詳細ページ。不要なら空文字 */
 const LIVE = [
-  {date:"2026.10.18", venue:"会場名（仮）", city:"TOKYO", url:"#"},
-  {date:"2026.11.03", venue:"会場名（仮）", city:"OSAKA", url:"#"}
+  {
+    date:"2026-09-23",
+    title:"CIRCUS × CIRCUS ODAIBA",
+    venue:"お台場青海地区P区画",
+    city:"TOKYO",
+    note:"開場・開演 10:00",
+    img:"",
+    url:"https://eplus.jp/sf/detail/2950550004-P0030012P021001?P1=0175"
+  },
+  {
+    date:"2026-07-08",
+    title:"Sonsi 単独公演『ホンモノ』",
+    venue:"Spotify O-EAST",
+    city:"TOKYO",
+    note:"",
+    img:"live-honmono.jpeg",
+    url:""
+  }
 ];
 
 const QA = [

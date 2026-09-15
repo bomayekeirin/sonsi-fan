@@ -74,15 +74,39 @@ if (videoList && typeof VIDEOS !== 'undefined') {
   });
 }
 
-// LIVE
-liveList.innerHTML = LIVE.length ? LIVE.map(l => `
-  <div class="live__row">
-    <span class="live__date">${esc(l.date)}</span>
-    <span class="live__venue">${esc(l.venue)}</span>
-    <span class="live__city">${esc(l.city)}</span>
-    <a class="live__ticket" href="${l.url}" target="_blank" rel="noopener">詳細</a>
-  </div>`).join('')
-  : '<p class="live__empty">現在、公開されているライブ情報はありません。</p>';
+// LIVE（日付で自動的に UPCOMING / PAST に振り分け、それぞれ並べ替える）
+const fmtDate = iso => {
+  const [y,m,d] = iso.split('-');
+  return `${y}.${m}.${d}`;
+};
+const liveCard = (l, past) => `
+  <article class="lv${past ? ' is-past' : ''}">
+    ${l.img ? `<div class="lv__img"><img src="${esc(l.img)}" alt="" loading="lazy"></div>` : ''}
+    <div class="lv__body">
+      <p class="lv__date">${fmtDate(l.date)}${past ? '<span class="lv__end">終了</span>' : ''}</p>
+      <p class="lv__title">${esc(l.title)}</p>
+      <p class="lv__venue">${esc(l.venue)}<span class="lv__city">${esc(l.city)}</span></p>
+      ${l.note ? `<p class="lv__note">${esc(l.note)}</p>` : ''}
+      ${l.url ? `<a class="lv__link" href="${l.url}" target="_blank" rel="noopener">チケット・詳細</a>` : ''}
+    </div>
+  </article>`;
+
+const today = new Date().toISOString().slice(0,10);
+const upcoming = LIVE.filter(l => l.date >= today).sort((a,b) => a.date < b.date ? -1 : 1);
+const past     = LIVE.filter(l => l.date <  today).sort((a,b) => a.date > b.date ? -1 : 1);
+
+liveList.innerHTML = `
+  <div class="lv__group">
+    <p class="lv__head">UPCOMING<span>今後の予定</span></p>
+    ${upcoming.length
+      ? upcoming.map(l => liveCard(l, false)).join('')
+      : '<p class="live__empty">現在、公開されている出演予定はありません。</p>'}
+  </div>
+  ${past.length ? `
+  <div class="lv__group">
+    <p class="lv__head">PAST<span>終了した公演</span></p>
+    ${past.map(l => liveCard(l, true)).join('')}
+  </div>` : ''}`;
 
 // MEDIA
 mediaGrid.innerHTML = SNS.map(s => `
