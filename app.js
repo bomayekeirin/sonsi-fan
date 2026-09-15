@@ -170,8 +170,7 @@ mediaGrid.innerHTML = SNS.map(s => `
       <p class="media__handle">${esc(s.handle)}</p>
     </div>
   </a>`).join('');
-igGrid.innerHTML = Array.from({length:6}, () =>
-  `<a class="ig__cell" href="${SNS[0].url}" target="_blank" rel="noopener">IG（仮）</a>`).join('');
+
 
 // Q&A
 qaList.innerHTML = QA.map((item,i) => `
