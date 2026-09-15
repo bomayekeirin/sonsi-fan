@@ -49,14 +49,14 @@ if (igRail && typeof SOCIAL_POSTS !== 'undefined') {
       const label = p.type === 'tt' ? 'TikTok' : 'Instagram';
       return `
       <div class="upd__slide" data-i="${i}">
+        <div class="upd__meta">
+          ${svg(p.type === 'tt' ? 'tt' : 'ig')}
+          <span class="upd__date">${p.date ? fmtDate(p.date) : ''}</span>
+          ${isNew ? '<span class="upd__new">NEW</span>' : ''}
+        </div>
         <div class="upd__window">
           <div class="upd__fit" style="width:${BASE_W}px"></div>
           <div class="upd__ph"><span>${label}</span></div>
-        </div>
-        <div class="upd__meta">
-          <span class="upd__src">${label}</span>
-          <span class="upd__date">${p.date ? fmtDate(p.date) : ''}</span>
-          ${isNew ? '<span class="upd__new">NEW</span>' : ''}
         </div>
       </div>`;
     }).join('');
