@@ -110,5 +110,22 @@ const VIDEOS = [
    date … "YYYY-MM-DD"。24時間以内ならNEWバッジが点滅します
    新しい投稿が出たら、この配列の先頭に1行足すだけです */
 const IG_POSTS = [
-  // {url:"https://www.instagram.com/p/XXXXXXXXXXX/", date:"2026-09-15"},
+  {url:"https://www.instagram.com/reel/DbV0EWIPaKU/", date:"2026-07-29"},
+  {url:"https://www.instagram.com/p/DbLA2ZIgFCx/", date:"2026-07-24"},
+  {url:"https://www.instagram.com/reel/DaxW_3-ADHg/", date:"2026-07-14"},
+  {url:"https://www.instagram.com/reel/DaC4ivPgCTD/", date:"2026-06-26"},
+  {url:"https://www.instagram.com/p/DZpIbzoFLQS/", date:"2026-06-16"},
+  {url:"https://www.instagram.com/p/DZe1oFegjjI/", date:"2026-06-12"},
+  {url:"https://www.instagram.com/reel/DZcQPV2gO9L/", date:"2026-06-11"},
+  {url:"https://www.instagram.com/reel/DZXpFZXPv5B/", date:"2026-06-10"},
+  {url:"https://www.instagram.com/p/DYRzy8VPVKX/", date:"2026-05-13"},
+  {url:"https://www.instagram.com/p/DYRxgnbAKaT/", date:"2026-05-13"},
+  {url:"https://www.instagram.com/reel/DXjfgMSktxm/", date:"2026-04-25"},
+  {url:"https://www.instagram.com/reel/DXbZ-yODn35/", date:"2026-04-22"},
+  {url:"https://www.instagram.com/p/DXZenV6D2QA/", date:"2026-04-22"},
+  {url:"https://www.instagram.com/reel/DWlgUG9j5nN/", date:"2026-04-01"},
+  {url:"https://www.instagram.com/p/DWi6EGYj1IV/", date:"2026-03-31"},
+  {url:"https://www.instagram.com/reel/DU7W4Ghj8Mp/", date:"2026-02-19"},
+  {url:"https://www.instagram.com/p/DUUuSR8D04p/", date:"2026-02-04"},
+  {url:"https://www.instagram.com/p/DUUuNJFD0gD/", date:"2026-02-04"},
 ];
