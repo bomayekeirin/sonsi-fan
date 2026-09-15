@@ -23,6 +23,40 @@ footSns.innerHTML = snsHtml;
 const headSns = document.getElementById('headSns');
 if (headSns) headSns.innerHTML = snsHtml;
 
+// UPDATES（Instagram投稿）
+const igRail = document.getElementById('igRail');
+if (igRail && typeof IG_POSTS !== 'undefined') {
+  const posts = [...IG_POSTS].sort((a,b) => (b.date || '').localeCompare(a.date || ''));
+
+  if (!posts.length) {
+    igRail.innerHTML = '<p class="upd__empty">投稿を準備中です。</p>';
+  } else {
+    const dayAgo = Date.now() - 86400000;
+    igRail.innerHTML = posts.map(p => {
+      const isNew = p.date && new Date(p.date + 'T00:00:00').getTime() >= dayAgo;
+      return `
+      <div class="upd__slide">
+        ${isNew ? '<span class="upd__new">NEW</span>' : ''}
+        <blockquote class="instagram-media"
+          data-instgrm-permalink="${esc(p.url)}"
+          data-instgrm-version="14"></blockquote>
+      </div>`;
+    }).join('');
+
+    // Instagram公式の埋め込みスクリプトを1回だけ読み込む
+    const render = () => window.instgrm && window.instgrm.Embeds.process();
+    if (window.instgrm) {
+      render();
+    } else {
+      const sc = document.createElement('script');
+      sc.src = 'https://www.instagram.com/embed.js';
+      sc.async = true;
+      sc.onload = render;
+      document.body.appendChild(sc);
+    }
+  }
+}
+
 // NEWS
 newsList.innerHTML = NEWS.map(n => `
   <a class="news__item" href="${n.url}">

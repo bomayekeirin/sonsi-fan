@@ -104,3 +104,11 @@ const VIDEOS = [
   {id:"DznBr5sBEF0", title:"【Sonsi】RAPSTAR 2025 FINALS｜「BBA Spice」ライブパフォーマンス", date:"2025-12-18"},
   {id:"Qv_SjeEEww8", title:"Sonsi【地元密着・新曲披露】RAPSTAR 2025【HOOD STAGE】", date:"2025-11-01"}
 ];
+
+/* Instagram投稿（上にあるものほど新しい順で表示されます）
+   url  … 投稿ページのURL。末尾の ?igsh=... などは消してOK
+   date … "YYYY-MM-DD"。24時間以内ならNEWバッジが点滅します
+   新しい投稿が出たら、この配列の先頭に1行足すだけです */
+const IG_POSTS = [
+  // {url:"https://www.instagram.com/p/XXXXXXXXXXX/", date:"2026-09-15"},
+];
