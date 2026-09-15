@@ -21,7 +21,7 @@ const MUSIC = [
   {
     name: "ニセモノ",
     sub: "1st Album / 2026.06.10",
-    art: "jk-nisemono.jpg",
+    art: "jk-nisemono.jpeg",
     note: "全曲Koshyプロデュース。STUTS、Watsonが参加した全8曲。",
     tracks: [
       "BBA in da House",
@@ -44,7 +44,7 @@ const MUSIC = [
   {
     name: "BBA Spice",
     sub: "Single / 2026.07.29 — Sonsi & STUTS",
-    art: "jk-bbaspice.jpg",
+    art: "jk-bbaspice.jpeg",
     note: "「RAPSTAR 2025」で話題を呼んだ楽曲のスペシャルバージョン。",
     tracks: ["BBA Spice"],
     links: [
