@@ -1,0 +1,24 @@
+{
+  "name": "sonsi-fan",
+  "main": "worker.js",
+  "compatibility_date": "2026-09-16",
+
+  // リポジトリ直下のファイルをそのまま静的配信する。
+  // /api/ で始まるリクエストだけ worker.js が先に処理する。
+  "assets": {
+    "directory": "./",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+
+  // D1データベース。database_id はCloudflareでDBを作ったあとに書き換える
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "sonsi",
+      "database_id": "79e2a445-0ea3-40c6-926c-b98d7b710606"
+    }
+  ],
+
+  "observability": { "enabled": true }
+}
