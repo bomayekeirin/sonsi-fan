@@ -41,6 +41,39 @@ discGrid.innerHTML = MUSIC.map((m,i) => `
     <p class="disc__sub">${esc(m.sub)}</p>
   </button>`).join('');
 
+// VIDEO
+const videoList = document.getElementById('videoList');
+if (videoList && typeof VIDEOS !== 'undefined') {
+  videoList.innerHTML = VIDEOS.map(v => `
+    <article class="vid" data-id="${esc(v.id)}">
+      <button class="vid__thumb" aria-label="${esc(v.title || '動画')}を再生">
+        <img src="https://i.ytimg.com/vi/${esc(v.id)}/maxresdefault.jpg"
+             onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${esc(v.id)}/hqdefault.jpg'"
+             alt="" loading="lazy">
+        <span class="vid__play" aria-hidden="true"></span>
+      </button>
+      <div class="vid__meta">
+        ${v.title ? `<p class="vid__title">${esc(v.title)}</p>` : ''}
+        ${v.date ? `<p class="vid__date">${esc(v.date)}</p>` : ''}
+        <a class="vid__ext" href="https://youtu.be/${esc(v.id)}" target="_blank" rel="noopener">YouTubeで見る</a>
+      </div>
+    </article>`).join('');
+
+  // サムネイルを押した時点でプレイヤーに差し替える（初期表示を軽くするため）
+  videoList.addEventListener('click', e => {
+    const btn = e.target.closest('.vid__thumb');
+    if (!btn) return;
+    const card = btn.closest('.vid');
+    const id = card.dataset.id;
+    const frame = document.createElement('div');
+    frame.className = 'vid__player';
+    frame.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0"
+      title="YouTube" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen></iframe>`;
+    btn.replaceWith(frame);
+  });
+}
+
 // LIVE
 liveList.innerHTML = LIVE.length ? LIVE.map(l => `
   <div class="live__row">

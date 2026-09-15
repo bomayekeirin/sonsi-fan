@@ -68,3 +68,19 @@ const QA = [
   {q:"サイトに情報や写真を掲載してほしい。", a:"権利者の許諾が確認できるもののみ掲載しています。素材の提供やご要望はご連絡ください。"},
   {q:"コミュニティには誰でも参加できますか？", a:"どなたでも参加できます。他のファンが安心して話せる場にするため、参加時のルールに同意いただいています。"}
 ];
+
+/* 動画（上にあるものほど新しい順で表示されます）
+   id … YouTubeのURL末尾。https://youtu.be/XXXX の XXXX 部分
+   title … 表示タイトル
+   date … 公開日（空にすると非表示） */
+const VIDEOS = [
+  {id:"DznBr5sBEF0", title:"", date:""},
+  {id:"bQ2q8xxE79E", title:"", date:""},
+  {id:"v0LIoEpZc38", title:"", date:""},
+  {id:"Tmkhsiysva8", title:"", date:""},
+  {id:"_DTzIilcqxc", title:"Sonsi - 思い通り", date:""},
+  {id:"lEAXRI-PtEA", title:"Sonsi - Koshy Freestyle feat. Watson (Official Video)", date:""},
+  {id:"HiSAuO-KW-4", title:"Sonsi - KANOYA (Official Video)", date:""},
+  {id:"Qv_SjeEEww8", title:"Sonsi【地元密着・新曲披露】RAPSTAR 2025【HOOD STAGE】", date:""},
+  {id:"P5gMCLOTekg", title:"Sonsi - OYJ (Official Video)", date:""}
+];
