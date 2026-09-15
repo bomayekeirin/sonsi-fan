@@ -99,10 +99,13 @@ const onScroll = () => {
   const y = window.scrollY;
   head.classList.toggle('is-solid', y > 40);
   cta.classList.toggle('is-show', y > window.innerHeight * .8);
-  // ヒーローの大ロゴが画面上端より上に出たらヘッダーをロゴ表示に切り替える
+  // ヒーローの大ロゴが画面上端より上に出たらヘッダーをロゴ表示に切り替える。
+  // 境界でのちらつきを防ぐため、切り替えと戻りに余白（ヒステリシス）を持たせる
   if (heroLogo) {
-    const passed = heroLogo.getBoundingClientRect().bottom <= 0;
-    document.body.classList.toggle('logo-in-head', passed);
+    const bottom = heroLogo.getBoundingClientRect().bottom;
+    const shown = document.body.classList.contains('logo-in-head');
+    if (!shown && bottom <= -48) document.body.classList.add('logo-in-head');
+    else if (shown && bottom >= 24) document.body.classList.remove('logo-in-head');
   }
 };
 window.addEventListener('scroll', onScroll, {passive:true});
