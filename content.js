@@ -2,12 +2,12 @@
    CONTENT ── ここを書き換えるだけで各セクションが更新されます
    ============================================================ */
 const SNS = [
-  {name:"Instagram", handle:"@sonsi", url:"https://www.instagram.com/", icon:"ig"},
-  {name:"X",         handle:"@sonsi", url:"https://x.com/",             icon:"x"},
-  {name:"YouTube",   handle:"Sonsi",  url:"https://www.youtube.com/",   icon:"yt"},
-  {name:"TikTok",    handle:"@sonsi", url:"https://www.tiktok.com/",    icon:"tt"},
-  {name:"Spotify",   handle:"Sonsi",  url:"https://open.spotify.com/",  icon:"sp"},
-  {name:"Apple Music", handle:"Sonsi",url:"https://music.apple.com/",   icon:"am"}
+  {name:"Instagram",   handle:"@ta_sonsi",       url:"https://www.instagram.com/ta_sonsi",  icon:"ig"},
+  {name:"X",           handle:"@takenakasonsi__", url:"https://x.com/takenakasonsi__",      icon:"x"},
+  {name:"TikTok",      handle:"@sonsi1230",      url:"https://www.tiktok.com/@sonsi1230",   icon:"tt"},
+  {name:"YouTube",     handle:"@takenakasonsi",  url:"https://youtube.com/@takenakasonsi",  icon:"yt"},
+  {name:"Spotify",     handle:"Sonsi",           url:"https://open.spotify.com/intl-ja/artist/6YoXFM2OoA3Bn1SUeFnf7r", icon:"sp"},
+  {name:"Apple Music", handle:"Sonsi",           url:"https://music.apple.com/jp/artist/sonsi/1872630257", icon:"am"}
 ];
 
 const NEWS = [

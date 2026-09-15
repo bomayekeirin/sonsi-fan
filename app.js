@@ -20,6 +20,8 @@ const snsHtml = SNS.map(s =>
   `<a href="${s.url}" target="_blank" rel="noopener" aria-label="${esc(s.name)}">${svg(s.icon)}</a>`).join('');
 menuSns.innerHTML = snsHtml;
 footSns.innerHTML = snsHtml;
+const headSns = document.getElementById('headSns');
+if (headSns) headSns.innerHTML = snsHtml;
 
 // NEWS
 newsList.innerHTML = NEWS.map(n => `
