@@ -436,13 +436,13 @@ body.logo-in-head .head__logo{opacity:1}
 }
 .svc{display:grid;gap:8px;width:100%}
 .svc__card{
-  display:flex;align-items:center;justify-content:space-between;gap:10px;
-  border:1px solid var(--line);padding:14px 16px;
-  transition:background .2s,color .2s,border-color .2s;
+  display:flex;align-items:center;justify-content:center;
+  background:#fff;border:1px solid #fff;min-height:56px;padding:12px 18px;
+  transition:opacity .2s;
 }
-.svc__card:hover{background:#fff;color:#000;border-color:#fff}
-.svc__name{font-size:13px;font-weight:500;letter-spacing:.02em}
-.svc__arrow{font-size:12px;opacity:.6}
+.svc__card:hover{opacity:.78}
+.svc__logo{max-height:22px;max-width:132px;width:auto;height:auto;display:block}
+.svc__name{font-size:13px;font-weight:700;letter-spacing:.02em;color:#000}
 
 @media (min-width:768px){
   .svc{grid-template-columns:1fr 1fr}
@@ -451,8 +451,8 @@ body.logo-in-head .head__logo{opacity:1}
 /* 配信カード用に既存のモーダルリンク指定を上書き */
 .modal__links{display:block;margin-top:0}
 .modal__links .svc__card{
-  border-radius:0;padding:14px 16px;font-size:13px;letter-spacing:normal;
-  border-color:var(--line);
+  border-radius:0;padding:12px 18px;font-size:13px;letter-spacing:normal;
+  border-color:#fff;
 }
 
 /* ============================================================

@@ -207,9 +207,10 @@ const openModal = i => {
   modalLinks.innerHTML = `
     <p class="modal__linkhead">配信中</p>
     <div class="svc">${(m.links || []).map(l => `
-      <a class="svc__card" href="${l.url}" target="_blank" rel="noopener">
-        <span class="svc__name">${esc(l.label)}</span>
-        <span class="svc__arrow">↗</span>
+      <a class="svc__card" href="${l.url}" target="_blank" rel="noopener" aria-label="${esc(l.label)}で聴く">
+        ${l.logo
+          ? `<img class="svc__logo" src="${esc(l.logo)}" alt="${esc(l.label)}">`
+          : `<span class="svc__name">${esc(l.label)}</span>`}
       </a>`).join('')}</div>`;
   modal.classList.add('is-open');
   document.body.classList.add('is-locked');

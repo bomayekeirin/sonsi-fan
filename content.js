@@ -34,11 +34,11 @@ const MUSIC = [
       "OYJ (Remix) (feat. Watson)"
     ],
     links: [
-      {label:"Apple Music",   url:"https://music.apple.com/jp/album/6772952116?ls=1&app=music&at=1l3vpUI&ct=LFV_6db0b3fb0503b63a69816a7a60b706b2&itscg=30440&itsct=catchall_p1&lId=215947485&cId=none&sr=1&src=Linkfire"},
-      {label:"Spotify",       url:"https://open.spotify.com/album/5W2uqjQruJyKWFfsnGMZ6h"},
-      {label:"LINE MUSIC",    url:"https://music.line.me/webapp/album/mb00000000055d276d"},
-      {label:"Amazon Music",  url:"http://music.amazon.co.jp/albums/B0H2VRV2N7?tag=lf_wmj-22&ie=UTF8&linkCode=as2&ascsubtag=6db0b3fb0503b63a69816a7a60b706b2&ref=dmm_acq_soc_jp_u_lfire_lp_x_6db0b3fb0503b63a69816a7a60b706b2"},
-      {label:"YouTube Music", url:"https://music.youtube.com/playlist?list=OLAK5uy_lPCmy-rJm5NIZxG745rVjS04jPlU-f4Bw&src=Linkfire&lId=0fb7c053-5f44-4f94-94c4-00997d7603ad&cId=d3d58fd7-4c47-11e6-9fd0-066c3e7a8751"}
+      {label:"Apple Music", logo:"svc-applemusic.png", url:"https://music.apple.com/jp/album/6772952116?ls=1&app=music&at=1l3vpUI&ct=LFV_6db0b3fb0503b63a69816a7a60b706b2&itscg=30440&itsct=catchall_p1&lId=215947485&cId=none&sr=1&src=Linkfire"},
+      {label:"Spotify", logo:"svc-spotify.png", url:"https://open.spotify.com/album/5W2uqjQruJyKWFfsnGMZ6h"},
+      {label:"LINE MUSIC", logo:"svc-linemusic.png", url:"https://music.line.me/webapp/album/mb00000000055d276d"},
+      {label:"Amazon Music", logo:"svc-amazon.png", url:"http://music.amazon.co.jp/albums/B0H2VRV2N7?tag=lf_wmj-22&ie=UTF8&linkCode=as2&ascsubtag=6db0b3fb0503b63a69816a7a60b706b2&ref=dmm_acq_soc_jp_u_lfire_lp_x_6db0b3fb0503b63a69816a7a60b706b2"},
+      {label:"YouTube Music", logo:"svc-ytmusic.png", url:"https://music.youtube.com/playlist?list=OLAK5uy_lPCmy-rJm5NIZxG745rVjS04jPlU-f4Bw&src=Linkfire&lId=0fb7c053-5f44-4f94-94c4-00997d7603ad&cId=d3d58fd7-4c47-11e6-9fd0-066c3e7a8751"}
     ]
   },
   {
@@ -48,10 +48,10 @@ const MUSIC = [
     note: "「RAPSTAR 2025」で話題を呼んだ楽曲のスペシャルバージョン。",
     tracks: ["BBA Spice"],
     links: [
-      {label:"Apple Music",   url:"https://www.tunecore.co.jp/to/apple_music/1860477"},
-      {label:"Spotify",       url:"https://www.tunecore.co.jp/to/spotify/1860477"},
-      {label:"YouTube Music", url:"https://www.tunecore.co.jp/to/youtube_music_key/1860477"},
-      {label:"LINE MUSIC",    url:"https://www.tunecore.co.jp/to/line/1860477"}
+      {label:"Apple Music", logo:"svc-applemusic.png", url:"https://www.tunecore.co.jp/to/apple_music/1860477"},
+      {label:"Spotify", logo:"svc-spotify.png", url:"https://www.tunecore.co.jp/to/spotify/1860477"},
+      {label:"YouTube Music", logo:"svc-ytmusic.png", url:"https://www.tunecore.co.jp/to/youtube_music_key/1860477"},
+      {label:"LINE MUSIC", logo:"svc-linemusic.png", url:"https://www.tunecore.co.jp/to/line/1860477"}
     ]
   }
 ];
