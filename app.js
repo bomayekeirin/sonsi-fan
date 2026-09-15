@@ -30,87 +30,49 @@ const headSns = document.getElementById('headSns');
 if (headSns) headSns.innerHTML = snsHtml;
 
 // UPDATES（Instagram / TikTok を日付順に混ぜて表示）
-//  ・画面に入ったスライドだけ埋め込みを生成する（最初に18件ぶん読み込むと重いため）
-//  ・埋め込みの実寸を測って縮小し、全カードの高さを揃える
+//  各社の埋め込み専用URLを直接iframeで読む。公式スクリプトは使わないので、
+//  高さをこちらで固定でき、読み込みタイミングにも左右されない。
 const igRail = document.getElementById('igRail');
 if (igRail && typeof SOCIAL_POSTS !== 'undefined') {
-  const CARD_H = window.innerWidth < 768 ? 430 : 520;   // カードの高さ（全て共通）
-  const BASE_W = 328;                                   // 埋め込みの素の横幅
-  const posts  = [...SOCIAL_POSTS].sort((a,b) => (b.date || '').localeCompare(a.date || ''));
+  const posts = [...SOCIAL_POSTS].sort((a,b) => (b.date || '').localeCompare(a.date || ''));
+
+  // 投稿の種類ごとの横幅。カードの高さは共通なので、この幅で中身の収まりが決まる
+  const WIDTH = { ttVideo: 268, igReel: 236, igPost: 304 };
+
+  const embedOf = p => {
+    if (p.type === 'tt') {
+      const id = (p.url.match(/video\/(\d+)/) || [])[1] || '';
+      return { src: `https://www.tiktok.com/embed/v2/${id}`, w: p.w || WIDTH.ttVideo };
+    }
+    const code = (p.url.match(/\/(?:p|reel|tv)\/([\w-]+)/) || [])[1] || '';
+    const isReel = /\/reel\//.test(p.url);
+    return {
+      src: `https://www.instagram.com/p/${code}/embed`,
+      w: p.w || (isReel ? WIDTH.igReel : WIDTH.igPost)
+    };
+  };
 
   if (!posts.length) {
     igRail.innerHTML = '<p class="upd__empty">投稿を準備中です。</p>';
   } else {
     const dayAgo = Date.now() - 86400000;
-    igRail.style.setProperty('--card-h', CARD_H + 'px');
-
-    igRail.innerHTML = posts.map((p, i) => {
+    igRail.innerHTML = posts.map(p => {
       const isNew = p.date && new Date(p.date + 'T00:00:00').getTime() >= dayAgo;
-      const label = p.type === 'tt' ? 'TikTok' : 'Instagram';
+      const e = embedOf(p);
       return `
-      <div class="upd__slide" data-i="${i}">
+      <div class="upd__slide" style="width:${e.w}px">
         <div class="upd__meta">
           ${svg(p.type === 'tt' ? 'tt' : 'ig')}
           <span class="upd__date">${p.date ? fmtDate(p.date) : ''}</span>
           ${isNew ? '<span class="upd__new">NEW</span>' : ''}
         </div>
         <div class="upd__window">
-          <div class="upd__fit" style="width:${BASE_W}px"></div>
-          <div class="upd__ph"><span>${label}</span></div>
+          <iframe src="${e.src}" loading="lazy" scrolling="no"
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
+            allowfullscreen title="投稿"></iframe>
         </div>
       </div>`;
     }).join('');
-
-    // 公式スクリプトは必要になった時に1回だけ読み込む
-    const loaded = {};
-    const loadScript = src => loaded[src] || (loaded[src] = new Promise(res => {
-      const sc = document.createElement('script');
-      sc.src = src; sc.async = true; sc.onload = res; sc.onerror = res;
-      document.body.appendChild(sc);
-    }));
-
-    // 埋め込みの実寸に合わせて縮小し、高さをCARD_Hに揃える
-    const fitSlide = slide => {
-      const fit = slide.querySelector('.upd__fit');
-      const h = fit.scrollHeight;
-      if (!h) return false;
-      const s = Math.min(1, CARD_H / h);
-      fit.style.transform = `scale(${s})`;
-      slide.style.width = Math.round(BASE_W * s) + 'px';
-      slide.classList.add('is-ready');
-      return true;
-    };
-
-    const build = async slide => {
-      if (slide.dataset.done) return;
-      slide.dataset.done = '1';
-      const p = posts[+slide.dataset.i];
-      const fit = slide.querySelector('.upd__fit');
-
-      if (p.type === 'tt') {
-        const id = (p.url.match(/video\/(\d+)/) || [])[1] || '';
-        fit.innerHTML = `<blockquote class="tiktok-embed" cite="${esc(p.url)}"
-          data-video-id="${esc(id)}"><section></section></blockquote>`;
-        await loadScript('https://www.tiktok.com/embed.js');
-      } else {
-        fit.innerHTML = `<blockquote class="instagram-media"
-          data-instgrm-permalink="${esc(p.url)}" data-instgrm-version="14"></blockquote>`;
-        await loadScript('https://www.instagram.com/embed.js');
-        if (window.instgrm) window.instgrm.Embeds.process();
-      }
-
-      // 埋め込みの高さが確定するまで測り続ける
-      let tries = 0;
-      const timer = setInterval(() => {
-        if (fitSlide(slide) || ++tries > 40) clearInterval(timer);
-      }, 250);
-      new ResizeObserver(() => fitSlide(slide)).observe(fit);
-    };
-
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) build(e.target); });
-    }, { root: igRail, rootMargin: '600px' });
-    igRail.querySelectorAll('.upd__slide').forEach(el => io.observe(el));
   }
 }
 
