@@ -12,6 +12,12 @@ const ICONS = {
 const svg = k => '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">'+ICONS[k]+'</svg>';
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
+// 日付表示の共通フォーマット
+const fmtDate = iso => {
+  const [y,m,d] = iso.split('-');
+  return `${y}.${m}.${d}`;
+};
+
 /* ============================================================
    RENDER
    ============================================================ */
@@ -23,37 +29,88 @@ footSns.innerHTML = snsHtml;
 const headSns = document.getElementById('headSns');
 if (headSns) headSns.innerHTML = snsHtml;
 
-// UPDATES（Instagram投稿）
+// UPDATES（Instagram / TikTok を日付順に混ぜて表示）
+//  ・画面に入ったスライドだけ埋め込みを生成する（最初に18件ぶん読み込むと重いため）
+//  ・埋め込みの実寸を測って縮小し、全カードの高さを揃える
 const igRail = document.getElementById('igRail');
-if (igRail && typeof IG_POSTS !== 'undefined') {
-  const posts = [...IG_POSTS].sort((a,b) => (b.date || '').localeCompare(a.date || ''));
+if (igRail && typeof SOCIAL_POSTS !== 'undefined') {
+  const CARD_H = window.innerWidth < 768 ? 430 : 520;   // カードの高さ（全て共通）
+  const BASE_W = 328;                                   // 埋め込みの素の横幅
+  const posts  = [...SOCIAL_POSTS].sort((a,b) => (b.date || '').localeCompare(a.date || ''));
 
   if (!posts.length) {
     igRail.innerHTML = '<p class="upd__empty">投稿を準備中です。</p>';
   } else {
     const dayAgo = Date.now() - 86400000;
-    igRail.innerHTML = posts.map(p => {
+    igRail.style.setProperty('--card-h', CARD_H + 'px');
+
+    igRail.innerHTML = posts.map((p, i) => {
       const isNew = p.date && new Date(p.date + 'T00:00:00').getTime() >= dayAgo;
+      const label = p.type === 'tt' ? 'TikTok' : 'Instagram';
       return `
-      <div class="upd__slide">
-        ${isNew ? '<span class="upd__new">NEW</span>' : ''}
-        <blockquote class="instagram-media"
-          data-instgrm-permalink="${esc(p.url)}"
-          data-instgrm-version="14"></blockquote>
+      <div class="upd__slide" data-i="${i}">
+        <div class="upd__window">
+          <div class="upd__fit" style="width:${BASE_W}px"></div>
+          <div class="upd__ph"><span>${label}</span></div>
+        </div>
+        <div class="upd__meta">
+          <span class="upd__src">${label}</span>
+          <span class="upd__date">${p.date ? fmtDate(p.date) : ''}</span>
+          ${isNew ? '<span class="upd__new">NEW</span>' : ''}
+        </div>
       </div>`;
     }).join('');
 
-    // Instagram公式の埋め込みスクリプトを1回だけ読み込む
-    const render = () => window.instgrm && window.instgrm.Embeds.process();
-    if (window.instgrm) {
-      render();
-    } else {
+    // 公式スクリプトは必要になった時に1回だけ読み込む
+    const loaded = {};
+    const loadScript = src => loaded[src] || (loaded[src] = new Promise(res => {
       const sc = document.createElement('script');
-      sc.src = 'https://www.instagram.com/embed.js';
-      sc.async = true;
-      sc.onload = render;
+      sc.src = src; sc.async = true; sc.onload = res; sc.onerror = res;
       document.body.appendChild(sc);
-    }
+    }));
+
+    // 埋め込みの実寸に合わせて縮小し、高さをCARD_Hに揃える
+    const fitSlide = slide => {
+      const fit = slide.querySelector('.upd__fit');
+      const h = fit.scrollHeight;
+      if (!h) return false;
+      const s = Math.min(1, CARD_H / h);
+      fit.style.transform = `scale(${s})`;
+      slide.style.width = Math.round(BASE_W * s) + 'px';
+      slide.classList.add('is-ready');
+      return true;
+    };
+
+    const build = async slide => {
+      if (slide.dataset.done) return;
+      slide.dataset.done = '1';
+      const p = posts[+slide.dataset.i];
+      const fit = slide.querySelector('.upd__fit');
+
+      if (p.type === 'tt') {
+        const id = (p.url.match(/video\/(\d+)/) || [])[1] || '';
+        fit.innerHTML = `<blockquote class="tiktok-embed" cite="${esc(p.url)}"
+          data-video-id="${esc(id)}"><section></section></blockquote>`;
+        await loadScript('https://www.tiktok.com/embed.js');
+      } else {
+        fit.innerHTML = `<blockquote class="instagram-media"
+          data-instgrm-permalink="${esc(p.url)}" data-instgrm-version="14"></blockquote>`;
+        await loadScript('https://www.instagram.com/embed.js');
+        if (window.instgrm) window.instgrm.Embeds.process();
+      }
+
+      // 埋め込みの高さが確定するまで測り続ける
+      let tries = 0;
+      const timer = setInterval(() => {
+        if (fitSlide(slide) || ++tries > 40) clearInterval(timer);
+      }, 250);
+      new ResizeObserver(() => fitSlide(slide)).observe(fit);
+    };
+
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) build(e.target); });
+    }, { root: igRail, rootMargin: '600px' });
+    igRail.querySelectorAll('.upd__slide').forEach(el => io.observe(el));
   }
 }
 
@@ -76,12 +133,6 @@ discGrid.innerHTML = MUSIC.map((m,i) => `
     <p class="disc__name">${esc(m.name)}</p>
     <p class="disc__sub">${esc(m.sub)}</p>
   </button>`).join('');
-
-// 日付表示の共通フォーマット
-const fmtDate = iso => {
-  const [y,m,d] = iso.split('-');
-  return `${y}.${m}.${d}`;
-};
 
 // VIDEO
 const videoList = document.getElementById('videoList');
