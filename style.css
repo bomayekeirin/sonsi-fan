@@ -106,9 +106,32 @@ body.logo-in-head .head__logo{opacity:1}
   align-items:center;justify-content:center;
   padding:var(--head-h) var(--pad) 90px;position:relative;text-align:center;
 }
+.hero{overflow:hidden}
+.hero__logo,.hero__tag,.hero__kv,.hero__scroll{position:relative;z-index:1}
+
+/* 背面を流れるドクロ柄 */
+.hero__bg{
+  position:absolute;left:0;right:0;top:var(--head-h);height:0;
+  overflow:hidden;z-index:0;pointer-events:none;
+}
+.hero__bg span{
+  position:absolute;inset:0;
+  background:url(bg-skull.png) repeat;
+  background-size:auto 200px;
+  opacity:.3;
+  animation:bgDrift 52s linear infinite;
+}
+@keyframes bgDrift{ to{ background-position-x:-333px } }
+
 .hero__logo{width:min(62vw,360px);margin:0 auto}
+.hero__logo img{
+  filter:drop-shadow(0 0 10px #000) drop-shadow(0 0 26px #000) drop-shadow(0 0 46px #000);
+}
 .hero__tag{
   margin-top:22px;font-size:10px;letter-spacing:.34em;color:var(--muted);
+}
+.hero__tag span{
+  display:inline-block;background:#000;padding:5px 9px 5px 12px;
   text-indent:.34em;
 }
 .hero__kv{
@@ -634,6 +657,7 @@ body.is-loading .hero__scroll{
 
 @media (prefers-reduced-motion:reduce){
   .hero__logo,.hero__tag,.hero__kv,.hero__scroll{
-    transition:none;filter:none;transform:none;
+    transition:none;transform:none;
   }
+  .hero__bg span{animation:none}
 }

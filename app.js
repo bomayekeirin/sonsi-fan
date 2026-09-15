@@ -163,6 +163,25 @@ const toggleMenu = open => {
 burger.addEventListener('click', () => toggleMenu(!menu.classList.contains('is-open')));
 menu.querySelectorAll('.menu__nav a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
 
+// ヒーロー背面の帯を、ヘッダー直下からキービジュアルの少し下までに合わせる
+const heroBg = document.getElementById('heroBg');
+const heroKv = document.querySelector('.hero__kv');
+const fitHeroBg = () => {
+  if (!heroBg || !heroKv) return;
+  const hero = heroBg.parentElement.getBoundingClientRect();
+  const kv = heroKv.getBoundingClientRect();
+  const top = parseFloat(getComputedStyle(document.documentElement)
+    .getPropertyValue('--head-h')) || 56;
+  heroBg.style.height = Math.max(0, (kv.bottom - hero.top) - top + 22) + 'px';
+};
+fitHeroBg();
+window.addEventListener('resize', fitHeroBg);
+window.addEventListener('load', fitHeroBg);
+if (heroKv) {
+  const kvImg = heroKv.querySelector('img');
+  if (kvImg) kvImg.addEventListener('load', fitHeroBg);
+}
+
 // ヘッダー背景 / スティッキーCTA
 const heroLogo = document.querySelector('.hero__logo');
 const onScroll = () => {
