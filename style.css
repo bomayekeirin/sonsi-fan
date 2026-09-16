@@ -311,8 +311,9 @@ body.is-loading .hero__bg{opacity:0;transition:none}
 .foot__logo{width:92px;margin:0 auto 22px;opacity:.9}
 .foot__sns{display:flex;justify-content:center;gap:22px;margin-bottom:26px}
 .foot__disc{
-  font-size:10px;color:var(--muted);line-height:2;max-width:44em;margin:0 auto 18px;
+  font-size:10px;color:var(--muted);line-height:2;max-width:44em;margin:0 auto 14px;
 }
+.foot__disc:last-of-type{margin-bottom:18px}
 .foot__copy{font-size:9px;color:#5a5a5a;letter-spacing:.1em}
 
 /* sticky CTA */
