@@ -431,7 +431,7 @@ body.is-loading .hero__bg{opacity:0;transition:none}
 .board__rule{font-size:10px;color:var(--muted);line-height:1.9;margin-top:24px}
 
 @media (min-width:768px){
-  .board__login{grid-template-columns:1fr 1fr;max-width:520px}
+  .board__login{max-width:340px}
 }
 
 

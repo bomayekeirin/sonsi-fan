@@ -34,22 +34,22 @@ Add file → Create new file でファイル名に `.assetsignore` と入力し�
 `"database_id": "ここにD1のデータベースIDを貼る"` の部分を、
 手順1で控えたIDに置き換えてからアップロードしてください。
 
-## 3. Discordアプリを作る
-
-1. https://discord.com/developers/applications → New Application
-2. OAuth2 → Redirects に追加
-   `https://sonsi-fan.site/api/callback/discord`
-3. CLIENT ID と CLIENT SECRET を控える（Secretは一度しか表示されません）
-
-## 4. Googleのクライアントを作る
+## 3. Googleのクライアントを作る
 
 1. Google Cloud Console → APIとサービス → OAuth同意画面
    - User Type: 外部 / 公開
    - スコープの追加は不要（openid, profile のみ使用）
 2. 認証情報 → OAuthクライアントID → ウェブアプリケーション
-   - 承認済みのリダイレクトURI:
-     `https://sonsi-fan.site/api/callback/google`
+   - 承認済みのJavaScript生成元: `https://sonsi-fan.site`
+   - 承認済みのリダイレクトURI: `https://sonsi-fan.site/api/callback/google`
 3. クライアントIDとシークレットを控える
+
+## 4. （後回し）LINEログインを足すとき
+
+LINE Developersでプロバイダーとチャネルを作り、コールバックURLに
+`https://sonsi-fan.site/api/callback/line` を登録します。
+worker.js の `PROVIDERS` にLINEの定義を足せば、同じ仕組みで動きます。
+Googleで問題なく回るようになってから着手してください。
 
 ## 5. 環境変数を登録する
 
@@ -58,10 +58,8 @@ Cloudflare → Workers & Pages → sonsi-fan → 設定 → 変数とシーク�
 
 | 名前 | 値 |
 |---|---|
-| `DISCORD_CLIENT_ID` | 手順3のID |
-| `DISCORD_CLIENT_SECRET` | 手順3のSecret |
-| `GOOGLE_CLIENT_ID` | 手順4のID |
-| `GOOGLE_CLIENT_SECRET` | 手順4のSecret |
+| `GOOGLE_CLIENT_ID` | 手順3のID |
+| `GOOGLE_CLIENT_SECRET` | 手順3のSecret |
 | `SITE_URL` | `https://sonsi-fan.site` |
 
 登録後、デプロイ一覧から再デプロイしてください。環境変数は再デプロイで反映されます。
@@ -77,7 +75,7 @@ Cloudflare → Workers & Pages → sonsi-fan → 設定 → 変数とシーク�
 ## 動作の仕組み
 
 - `/api/` で始まるリクエストだけ `worker.js` が処理し、それ以外は通常のファイルを返す
-- ログインはDiscord/Googleに飛ばし、戻ってきたらセッションIDをCookieで発行
+- ログインはGoogleに飛ばし、戻ってきたらセッションIDをCookieで発行
 - CookieはHttpOnly・Secure・SameSite=Laxなので、JSから盗めず、他サイトからの投稿もできない
 - 閲覧は誰でも可。投稿・削除・通報はログイン必須
 - 連投は30秒に1回、本文は500文字まで

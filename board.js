@@ -60,8 +60,7 @@
       auth.innerHTML = `
         <p class="board__lead">書き込みにはログインが必要です。閲覧は誰でもできます。</p>
         <div class="board__login">
-          <a class="btn btn--fill" href="/api/login/discord">Discordでログイン</a>
-          <a class="btn" href="/api/login/google">Googleでログイン</a>
+          <a class="btn btn--fill" href="/api/login/google">Googleでログイン</a>
         </div>`;
       form.hidden = true;
     }
