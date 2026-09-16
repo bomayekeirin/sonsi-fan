@@ -77,14 +77,17 @@ if (igRail && typeof SOCIAL_POSTS !== 'undefined') {
 }
 
 // NEWS
-newsList.innerHTML = NEWS.map(n => `
-  <a class="news__item" href="${n.url}">
+newsList.innerHTML = NEWS.map(n => {
+  const inner = `
     <div class="news__meta">
       <span class="news__date">${esc(n.date)}</span>
       <span class="news__cat">${esc(n.cat)}</span>
     </div>
-    <p class="news__title">${esc(n.title)}</p>
-  </a>`).join('');
+    <p class="news__title">${esc(n.title)}</p>`;
+  return n.url
+    ? `<a class="news__item" href="${n.url}" target="_blank" rel="noopener">${inner}</a>`
+    : `<div class="news__item">${inner}</div>`;
+}).join('');
 
 // MUSIC
 discGrid.innerHTML = MUSIC.map((m,i) => `

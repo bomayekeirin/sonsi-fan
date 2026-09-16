@@ -10,11 +10,17 @@ const SNS = [
   {name:"Apple Music", handle:"Sonsi",           url:"https://music.apple.com/jp/artist/sonsi/1872630257", icon:"am"}
 ];
 
+/* ニュース（上にあるものほど新しい順で表示されます）
+   cat … RELEASE / LIVE / VIDEO / MEDIA / 出演 / SITE
+   url … 記事のURL。空にするとリンクなしで表示されます */
 const NEWS = [
-  {date:"2026.09.10", cat:"RELEASE", title:"新曲「（タイトル未定）」配信開始（仮）", url:"#"},
-  {date:"2026.09.02", cat:"LIVE",    title:"ライブ出演情報を公開しました（仮）", url:"#"},
-  {date:"2026.08.24", cat:"MEDIA",   title:"インタビュー記事が公開（仮）", url:"#"},
-  {date:"2026.08.11", cat:"SITE",    title:"非公式ファンサイトを公開しました（仮）", url:"#"}
+  {date:"2026.08.28", cat:"出演", title:"「CIRCUS × CIRCUS ODAIBA」追加出演者が発表。Sonsiを含む全17組のラインナップが確定", url:"https://news.yahoo.co.jp/articles/53b6913d8955b5255f5fa7f4dfcbef7eded7e8e1"},
+  {date:"2026.08.26", cat:"出演", title:"「SPOOKY PUMPKIN 2026」出演アーティスト第2弾が発表。Sonsiを含む全74組が出そろう", url:"https://news.yahoo.co.jp/articles/1d3d0db3968497cf41b56206f5ee40786d2e8833"},
+  {date:"2026.07.29", cat:"RELEASE", title:"Sonsi & STUTS「BBA Spice」配信リリース。「RAPSTAR 2025」で披露された楽曲に2ndバースを追加", url:"https://kai-you.net/article/96109"},
+  {date:"2026.06.16", cat:"VIDEO",   title:"「Koshy Freestyle feat. Watson」ミュージックビデオ公開", url:"https://natalie.mu/music/news/676445"},
+  {date:"2026.06.12", cat:"LIVE",    title:"単独公演「ホンモノ」東京公演の完売を受け、地元・鹿児島での追加公演が決定", url:"https://natalie.mu/music/news/675954"},
+  {date:"2026.05.13", cat:"RELEASE", title:"1stアルバム「ニセモノ」のリリースと、初の単独公演「ホンモノ」開催を発表", url:"https://natalie.mu/music/news/671754"},
+  {date:"2026.01.16", cat:"MEDIA",   title:"Koshyとアルバムを制作中であることを明かす", url:"https://natalie.mu/music/news/656489"}
 ];
 
 const MUSIC = [
