@@ -60,7 +60,7 @@
     <a href="#live">LIVE<span class="ja">ライブ</span></a>
     <a href="#video">VIDEO<span class="ja">映像</span></a>
     <a href="#news">NEWS<span class="ja">最新情報</span></a>
-    <a href="#board">BOARD<span class="ja">ファン掲示板</span></a>
+    <a href="/board">BOARD<span class="ja">ファン掲示板</span></a>
     <a href="#updates">UPDATES<span class="ja">更新情報</span></a>
     <a href="#media">MEDIA<span class="ja">SNS</span></a>
     <a href="#qa">Q&amp;A<span class="ja">よくある質問</span></a>
@@ -135,20 +135,11 @@
 </section>
 
 <!-- ===== BOARD ===== -->
-<section class="sec" id="board">
+<section class="sec" id="board" data-limit="3">
   <div class="sec__head"><h2>BOARD</h2><span class="ja">ファン掲示板</span></div>
-  <div id="boardAuth" class="board__auth"></div>
-  <div id="boardForm" class="board__form" hidden>
-    <textarea id="boardInput" class="board__input" rows="3" maxlength="600"
-      placeholder="いま聴いてる曲、ライブの感想、なんでも。"></textarea>
-    <div class="board__formfoot">
-      <span id="boardCount" class="board__count">0 / 500</span>
-      <button id="boardSubmit" class="board__submit">投稿する</button>
-    </div>
-  </div>
-  <p id="boardNotice" class="board__notice"></p>
+  <p class="board__lead">ファン同士で感想を書き込める掲示板です。閲覧は誰でもできます。</p>
   <div id="boardList" class="board__list"></div>
-  <p class="board__rule">誹謗中傷・個人情報・本人や関係者への迷惑になる投稿は削除します。</p>
+  <a class="board__open" href="/board">掲示板をひらく</a>
 </section>
 
 <!-- ===== UPDATES ===== -->
@@ -200,7 +191,7 @@
 <!-- ===== STICKY CTA ===== -->
 <div class="cta" id="cta">
   <a href="https://www.instagram.com/ta_sonsi" target="_blank" rel="noopener">最新はInstagram</a>
-  <a href="#board">掲示板を見る</a>
+  <a href="/board">掲示板を見る</a>
 </div>
 
 <!-- ===== MODAL ===== -->

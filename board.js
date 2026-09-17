@@ -15,6 +15,10 @@
   const notice = document.getElementById("boardNotice");
   const MAX = 500;
 
+  // ホームでは最新数件だけを表示する（data-limit で件数を指定）
+  const LIMIT   = parseInt(root.dataset.limit || "0", 10);
+  const COMPACT = LIMIT > 0;
+
   let me = null;
   let canModerate = false;
 
@@ -41,12 +45,14 @@
   };
 
   const say = (msg, isError = false) => {
+    if (!notice) return;
     notice.textContent = msg || "";
     notice.classList.toggle("is-error", isError);
   };
 
   /* ---------- 表示の切り替え ---------- */
   const renderAuth = () => {
+    if (!auth || !form) return;
     if (me) {
       auth.innerHTML = `
         <div class="board__me">
@@ -83,7 +89,8 @@
     }
   };
 
-  const renderPosts = posts => {
+  const renderPosts = all => {
+    const posts = COMPACT ? all.slice(0, LIMIT) : all;
     if (!posts.length) {
       list.innerHTML = `<p class="board__empty">まだ投稿がありません。最初のひとことをどうぞ。</p>`;
       return;
@@ -96,10 +103,10 @@
           <time class="post__time">${ago(p.createdAt)}</time>
         </div>
         <p class="post__body">${esc(p.body)}</p>
-        <div class="post__acts">
+        ${COMPACT ? "" : `<div class="post__acts">
           ${p.mine || canModerate ? `<button data-act="delete">削除</button>` : ""}
           ${!p.mine && me ? `<button data-act="report">通報</button>` : ""}
-        </div>
+        </div>`}
       </article>`).join("");
   };
 
@@ -128,6 +135,7 @@
   };
 
   /* ---------- 投稿 ---------- */
+  if (input && submit) {
   input.addEventListener("input", () => {
     count.textContent = `${input.value.length} / ${MAX}`;
     count.classList.toggle("is-over", input.value.length > MAX);
@@ -152,6 +160,7 @@
       submit.disabled = false;
     }
   });
+  }
 
   /* ---------- 削除・通報 ---------- */
   list.addEventListener("click", async e => {

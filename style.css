@@ -838,3 +838,16 @@ body.is-loading .hero__scroll{
 .foot__links a{font-size:10px;color:var(--muted);letter-spacing:.06em;
   border-bottom:1px solid var(--line);padding-bottom:2px}
 .foot__links a:hover{color:#fff}
+
+/* 掲示板：ホームからの導線と単独ページ */
+.board__open{
+  display:inline-block;margin-top:22px;font-family:var(--f-disp);font-size:13px;
+  letter-spacing:.08em;border:1px solid #fff;padding:11px 22px;
+  transition:background .2s,color .2s;
+}
+.board__open:hover{background:#fff;color:#000}
+.head__logo.is-static{position:static;opacity:1;pointer-events:auto}
+.head__back{font-size:11px;letter-spacing:.06em;color:var(--muted);
+  border-bottom:1px solid var(--line);padding-bottom:2px}
+.head__back:hover{color:#fff}
+main#board{padding-top:calc(var(--head-h) + 44px)}

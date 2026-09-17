@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+<title>Sonsiファン掲示板｜Sonsi FAN SITE</title>
+<meta name="description" content="ラッパー Sonsi のファンが集まる掲示板。閲覧は誰でも、書き込みはGoogleログインで。">
+<meta name="theme-color" content="#000000">
+<link rel="canonical" href="https://sonsi-fan.site/board">
+
+<meta property="og:site_name" content="Sonsi FAN SITE">
+<meta property="og:title" content="Sonsiファン掲示板">
+<meta property="og:description" content="ラッパー Sonsi のファンが集まる掲示板。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sonsi-fan.site/board">
+<meta property="og:image" content="https://sonsi-fan.site/ogp-board.jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://sonsi-fan.site/ogp-board.jpeg">
+
+<link rel="icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+
+<header class="head is-solid">
+  <a class="head__brand" href="/" aria-label="Sonsi ファンサイト トップ">
+    <img class="head__logo is-static" src="sonsi-logo.png" alt="Sonsi">
+  </a>
+  <div class="head__right">
+    <a class="head__back" href="/">トップへ</a>
+  </div>
+</header>
+
+<main class="sec" id="board">
+  <div class="sec__head"><h2>BOARD</h2><span class="ja">Sonsiファン掲示板</span></div>
+
+  <div id="boardAuth" class="board__auth"></div>
+
+  <div id="boardForm" class="board__form" hidden>
+    <textarea id="boardInput" class="board__input" rows="3" maxlength="600"
+      placeholder="いま聴いてる曲、ライブの感想、なんでも。"></textarea>
+    <div class="board__formfoot">
+      <span id="boardCount" class="board__count">0 / 500</span>
+      <button id="boardSubmit" class="board__submit">投稿する</button>
+    </div>
+  </div>
+
+  <p id="boardNotice" class="board__notice"></p>
+  <div id="boardList" class="board__list"></div>
+
+  <p class="board__rule">
+    誹謗中傷・個人情報・本人や関係者への迷惑になる投稿は削除します。<br>
+    詳しくは<a href="/terms.html">利用規約</a>をご確認ください。
+  </p>
+</main>
+
+<a class="totop" href="#board">TOP</a>
+<footer class="foot">
+  <img class="foot__logo" src="sonsi-logo.png" alt="Sonsi">
+  <p class="foot__disc">
+    当サイトはSonsiを応援するファンが<br>
+    個人で運営する非公式ファンサイトです<br>
+    Sonsi本人、所属事務所、レーベル<br>
+    その他関係各所とは一切関係がありません
+  </p>
+  <p class="foot__links">
+    <a href="/privacy.html">プライバシーポリシー</a>
+    <a href="/terms.html">利用規約</a>
+  </p>
+  <p class="foot__copy">sonsi-fan.site / UNOFFICIAL</p>
+</footer>
+
+<script src="board.js?v=1"></script>
+</body>
+</html>
