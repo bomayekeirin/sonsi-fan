@@ -14,6 +14,7 @@ const SNS = [
    cat … RELEASE / LIVE / VIDEO / MEDIA / 出演 / SITE
    url … 記事のURL。空にするとリンクなしで表示されます */
 const NEWS = [
+  {date:"2026.09.17", cat:"出演", title:"10月4日に北九州で開催される「PLAYGROUND」に出演。会場はJ:COM北九州芸術劇場 大ホール", url:"https://livepocket.jp/e/playground"},
   {date:"2026.08.28", cat:"出演", title:"「CIRCUS × CIRCUS ODAIBA」追加出演者が発表。Sonsiを含む全17組のラインナップが確定", url:"https://news.yahoo.co.jp/articles/53b6913d8955b5255f5fa7f4dfcbef7eded7e8e1"},
   {date:"2026.08.26", cat:"出演", title:"「SPOOKY PUMPKIN 2026」出演アーティスト第2弾が発表。Sonsiを含む全74組が出そろう", url:"https://news.yahoo.co.jp/articles/1d3d0db3968497cf41b56206f5ee40786d2e8833"},
   {date:"2026.07.29", cat:"RELEASE", title:"Sonsi & STUTS「BBA Spice」配信リリース。「RAPSTAR 2025」で披露された楽曲に2ndバースを追加", url:"https://kai-you.net/article/96109"},
@@ -67,6 +68,15 @@ const MUSIC = [
    img  … フライヤー画像。不要なら空文字
    url  … チケットや詳細ページ。不要なら空文字 */
 const LIVE = [
+  {
+    date:"2026-10-04",
+    title:"PLAYGROUND",
+    venue:"J:COM北九州芸術劇場 大ホール",
+    city:"FUKUOKA",
+    note:"開場 15:30 / 開演 16:00 / 終演 20:30",
+    img:"live-playground.jpeg",
+    url:"https://livepocket.jp/e/playground"
+  },
   {
     date:"2026-09-23",
     title:"CIRCUS × CIRCUS ODAIBA",
