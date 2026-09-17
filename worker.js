@@ -52,7 +52,7 @@ async function currentUser(request, env) {
   const sid = readCookie(request, SESSION_COOKIE);
   if (!sid) return null;
   const row = await env.DB.prepare(
-    `SELECT u.id, u.name, u.avatar, u.role, u.banned, s.expires_at
+    `SELECT u.id, u.name, u.display_name, u.avatar, u.role, u.banned, s.expires_at
        FROM sessions s JOIN users u ON u.id = s.user_id
       WHERE s.id = ?`
   ).bind(sid).first();
@@ -62,7 +62,14 @@ async function currentUser(request, env) {
     return null;
   }
   if (row.banned) return null;
-  return { id: row.id, name: row.name, avatar: row.avatar, role: row.role };
+  return {
+    id: row.id,
+    name: row.display_name || row.name,
+    displayName: row.display_name,
+    avatar: row.avatar,
+    role: row.role,
+    needsName: !row.display_name          // 未設定なら表示名の入力を促す
+  };
 }
 
 /* ---------- OAuthプロバイダ定義 ---------- */
@@ -111,6 +118,15 @@ export default {
     const url = new URL(request.url);
     // /api/ 以外は静的ファイルを返す
     if (!url.pathname.startsWith("/api/") && url.pathname !== "/api") {
+      // ASSETSが無いのは、ダッシュボードのコードエディタなど
+      // 静的ファイルのバインディングが渡らない環境で実行された場合
+      if (!env.ASSETS) {
+        return new Response(
+          "静的ファイルのバインディング（ASSETS）がありません。\n" +
+          "本番環境では正常に動作します。GitHub経由でデプロイしてください。",
+          { status: 500, headers: { "content-type": "text/plain; charset=utf-8" } }
+        );
+      }
       return env.ASSETS.fetch(request);
     }
     return handleApi(request, env, url);
@@ -137,11 +153,17 @@ async function handleApi(request, env, url) {
     if ((m = path.match(/^login\/(\w+)$/))    && method === "GET") return handleLogin(m[1], env, url);
     if ((m = path.match(/^callback\/(\w+)$/)) && method === "GET") return await handleCallback(m[1], request, env, url);
 
+    if (path === "profile" && method === "POST") return await setDisplayName(request, env);
+
     if (path === "posts" && method === "GET")  return await listPosts(request, env, url);
     if (path === "posts" && method === "POST") return await createPost(request, env);
 
-    if ((m = path.match(/^posts\/(\d+)$/)) && method === "DELETE") return await deletePost(+m[1], request, env);
+    if ((m = path.match(/^posts\/(\d+)$/))     && method === "DELETE") return await deletePost(+m[1], request, env);
+    if ((m = path.match(/^posts\/(\d+)\/pin$/)) && method === "POST")   return await pinPost(+m[1], request, env);
     if (path === "reports" && method === "POST") return await createReport(request, env);
+
+    if (path === "upload" && method === "POST") return await uploadImage(request, env);
+    if ((m = path.match(/^img\/(.+)$/)) && method === "GET") return await serveImage(m[1], env);
 
     return json({ error: "見つかりません" }, 404);
   } catch (e) {
@@ -268,10 +290,11 @@ async function listPosts(request, env, url) {
   const me     = await currentUser(request, env);
 
   const sql = `
-    SELECT p.id, p.body, p.created_at, u.name, u.avatar, u.id AS user_id
+    SELECT p.id, p.body, p.created_at, p.pinned, p.image,
+           u.name, u.display_name, u.avatar, u.id AS user_id
       FROM posts p JOIN users u ON u.id = p.user_id
      WHERE p.deleted = 0 ${before ? "AND p.id < ?" : ""}
-     ORDER BY p.id DESC LIMIT ?`;
+     ORDER BY p.pinned DESC, p.id DESC LIMIT ?`;
   const stmt = before
     ? env.DB.prepare(sql).bind(before, limit)
     : env.DB.prepare(sql).bind(limit);
@@ -280,7 +303,10 @@ async function listPosts(request, env, url) {
   return json({
     posts: results.map(r => ({
       id: r.id, body: r.body, createdAt: r.created_at,
-      name: r.name, avatar: r.avatar,
+      pinned: !!r.pinned,
+      image: r.image ? `/api/img/${r.image}` : null,
+      name: r.display_name || r.name,
+      avatar: r.avatar,
       mine: !!me && me.id === r.user_id
     })),
     canModerate: !!me && me.role === "admin"
@@ -292,12 +318,13 @@ async function createPost(request, env) {
   const me = await currentUser(request, env);
   if (!me) return json({ error: "ログインが必要です" }, 401);
 
-  const { body } = await request.json().catch(() => ({}));
+  const { body, image } = await request.json().catch(() => ({}));
   const text = (body || "").trim();
-  if (!text) return json({ error: "本文を入力してください" }, 400);
+  if (!text && !image) return json({ error: "本文を入力してください" }, 400);
   if (text.length > POST_MAX_LEN) return json({ error: `${POST_MAX_LEN}文字以内で入力してください` }, 400);
+  if (image && me.role !== "admin") return json({ error: "画像を添付できるのは管理者のみです" }, 403);
 
-  const last = await env.DB.prepare(
+  const last = me.role === "admin" ? null : await env.DB.prepare(
     `SELECT created_at FROM posts WHERE user_id = ? ORDER BY id DESC LIMIT 1`
   ).bind(me.id).first();
   if (last && now() - last.created_at < POST_INTERVAL) {
@@ -305,8 +332,8 @@ async function createPost(request, env) {
   }
 
   await env.DB.prepare(
-    `INSERT INTO posts (user_id, body, created_at) VALUES (?, ?, ?)`
-  ).bind(me.id, text, now()).run();
+    `INSERT INTO posts (user_id, body, image, created_at) VALUES (?, ?, ?, ?)`
+  ).bind(me.id, text, image || null, now()).run();
 
   return json({ ok: true });
 }
@@ -322,6 +349,72 @@ async function deletePost(id, request, env) {
 
   await env.DB.prepare(`UPDATE posts SET deleted = 1 WHERE id = ?`).bind(id).run();
   return json({ ok: true });
+}
+
+/* ---------- 表示名の設定 ---------- */
+async function setDisplayName(request, env) {
+  const me = await currentUser(request, env);
+  if (!me) return json({ error: "ログインが必要です" }, 401);
+
+  const { displayName } = await request.json().catch(() => ({}));
+  const name = (displayName || "").trim().replace(/\s+/g, " ");
+  if (!name) return json({ error: "表示名を入力してください" }, 400);
+  if ([...name].length > 20) return json({ error: "表示名は20文字以内にしてください" }, 400);
+
+  await env.DB.prepare(`UPDATE users SET display_name = ? WHERE id = ?`)
+    .bind(name, me.id).run();
+  return json({ ok: true, name });
+}
+
+/* ---------- 投稿の先頭固定（管理者のみ） ---------- */
+async function pinPost(id, request, env) {
+  const me = await currentUser(request, env);
+  if (!me || me.role !== "admin") return json({ error: "権限がありません" }, 403);
+
+  const post = await env.DB.prepare(`SELECT pinned FROM posts WHERE id = ?`).bind(id).first();
+  if (!post) return json({ error: "投稿が見つかりません" }, 404);
+
+  const next = post.pinned ? 0 : 1;
+  await env.DB.prepare(`UPDATE posts SET pinned = ? WHERE id = ?`).bind(next, id).run();
+  return json({ ok: true, pinned: !!next });
+}
+
+/* ---------- 画像アップロード（管理者のみ） ---------- */
+const IMAGE_TYPES = {
+  "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "image/gif": "gif"
+};
+const IMAGE_MAX = 5 * 1024 * 1024;   // 5MB
+
+async function uploadImage(request, env) {
+  const me = await currentUser(request, env);
+  if (!me || me.role !== "admin") return json({ error: "権限がありません" }, 403);
+  if (!env.MEDIA) return json({ error: "画像保管（R2）が接続されていません" }, 500);
+
+  const form = await request.formData().catch(() => null);
+  const file = form && form.get("file");
+  if (!file || typeof file === "string") return json({ error: "ファイルがありません" }, 400);
+
+  const ext = IMAGE_TYPES[file.type];
+  if (!ext) return json({ error: "対応していない形式です（jpg / png / webp / gif）" }, 400);
+  if (file.size > IMAGE_MAX) return json({ error: "5MB以内の画像にしてください" }, 400);
+
+  const key = `${randomToken().slice(0, 24)}.${ext}`;
+  await env.MEDIA.put(key, file.stream(), {
+    httpMetadata: { contentType: file.type }
+  });
+  return json({ ok: true, key });
+}
+
+async function serveImage(key, env) {
+  if (!env.MEDIA) return new Response("not found", { status: 404 });
+  const obj = await env.MEDIA.get(key);
+  if (!obj) return new Response("not found", { status: 404 });
+  return new Response(obj.body, {
+    headers: {
+      "content-type": obj.httpMetadata?.contentType || "application/octet-stream",
+      "cache-control": "public, max-age=31536000, immutable"
+    }
+  });
 }
 
 /* ---------- 通報 ---------- */

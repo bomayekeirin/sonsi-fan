@@ -58,10 +58,26 @@
         <div class="board__me">
           ${me.avatar ? `<img src="${esc(me.avatar)}" alt="">` : `<span class="board__noavatar"></span>`}
           <span class="board__myname">${esc(me.name)}</span>
+          <button class="board__rename" id="boardRename">表示名を変更</button>
           <button class="board__logout" id="boardLogout">ログアウト</button>
+        </div>
+        <div class="board__name" id="boardName" ${me.needsName ? "" : "hidden"}>
+          <p class="board__namelead">${me.needsName
+            ? "掲示板で表示される名前を決めてください。本名を出したくない場合は、好きな名前で構いません。"
+            : "新しい表示名を入力してください。"}</p>
+          <div class="board__namerow">
+            <input id="boardNameInput" class="board__nameinput" type="text" maxlength="20"
+              placeholder="表示名（20文字以内）" value="${esc(me.displayName || "")}">
+            <button id="boardNameSave" class="board__submit">決定</button>
+          </div>
         </div>`;
       document.getElementById("boardLogout").addEventListener("click", logout);
-      form.hidden = false;
+      document.getElementById("boardRename").addEventListener("click", () => {
+        const box = document.getElementById("boardName");
+        box.hidden = !box.hidden;
+      });
+      document.getElementById("boardNameSave").addEventListener("click", saveName);
+      form.hidden = !!me.needsName;   // 表示名を決めるまで投稿できない
     } else {
       auth.innerHTML = `
         <p class="board__lead">書き込みにはログインが必要です。閲覧は誰でもできます。</p>
@@ -96,15 +112,19 @@
       return;
     }
     list.innerHTML = posts.map(p => `
-      <article class="post" data-id="${p.id}">
+      <article class="post${p.pinned ? " is-pinned" : ""}" data-id="${p.id}">
+        ${p.pinned ? '<span class="post__pin">固定</span>' : ""}
         <div class="post__head">
           ${p.avatar ? `<img class="post__avatar" src="${esc(p.avatar)}" alt="">` : `<span class="post__avatar"></span>`}
           <span class="post__name">${esc(p.name)}</span>
           <time class="post__time">${ago(p.createdAt)}</time>
         </div>
-        <p class="post__body">${esc(p.body)}</p>
+        ${p.body ? `<p class="post__body">${esc(p.body)}</p>` : ""}
+        ${p.image ? `<a class="post__img" href="${esc(p.image)}" target="_blank" rel="noopener">
+          <img src="${esc(p.image)}" alt="" loading="lazy"></a>` : ""}
         ${COMPACT ? "" : `<div class="post__acts">
           ${p.mine || canModerate ? `<button data-act="delete">削除</button>` : ""}
+          ${canModerate ? `<button data-act="pin">${p.pinned ? "固定を解除" : "先頭に固定"}</button>` : ""}
           ${!p.mine && me ? `<button data-act="report">通報</button>` : ""}
         </div>`}
       </article>`).join("");
@@ -117,14 +137,47 @@
     renderAuth();
   };
 
+  const renderUploader = () => {
+    const box = document.getElementById("boardUpload");
+    if (!box) return;
+    box.hidden = !canModerate;
+    if (!canModerate || box.dataset.ready) return;
+    box.dataset.ready = "1";
+    box.innerHTML = `
+      <label class="board__file">
+        画像を添付
+        <input type="file" id="boardFile" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+      </label>
+      <div id="boardPreview" class="board__preview"></div>`;
+    document.getElementById("boardFile").addEventListener("change", e => {
+      const f = e.target.files[0];
+      const pv = document.getElementById("boardPreview");
+      pv.innerHTML = f ? `<img src="${URL.createObjectURL(f)}" alt=""><span>${esc(f.name)}</span>` : "";
+    });
+  };
+
   const loadPosts = async () => {
     try {
       const data = await api("/api/posts");
       canModerate = data.canModerate;
+      renderUploader();
       renderPosts(data.posts);
     } catch (e) {
       list.innerHTML = `<p class="board__empty">投稿を読み込めませんでした。時間をおいて再読み込みしてください。</p>`;
     }
+  };
+
+  const saveName = async () => {
+    const el = document.getElementById("boardNameInput");
+    const displayName = el.value.trim();
+    if (!displayName) { say("表示名を入力してください", true); return; }
+    try {
+      const r = await api("/api/profile", { method: "POST", body: JSON.stringify({ displayName }) });
+      me.name = r.name; me.displayName = r.name; me.needsName = false;
+      renderAuth();
+      say("表示名を変更しました");
+      await loadPosts();
+    } catch (e) { say(e.message, true); }
   };
 
   const logout = async () => {
@@ -143,14 +196,27 @@
 
   submit.addEventListener("click", async () => {
     const body = input.value.trim();
-    if (!body) { say("本文を入力してください", true); return; }
+    const fileEl = document.getElementById("boardFile");
+    const file = fileEl && fileEl.files[0];
+    if (!body && !file) { say("本文を入力してください", true); return; }
     if (body.length > MAX) { say(`${MAX}文字以内で入力してください`, true); return; }
 
     submit.disabled = true;
     say("送信中…");
     try {
-      await api("/api/posts", { method: "POST", body: JSON.stringify({ body }) });
+      let image = null;
+      if (file) {
+        say("画像を送信中…");
+        const fd = new FormData();
+        fd.append("file", file);
+        const res = await fetch("/api/upload", { method: "POST", body: fd, credentials: "same-origin" });
+        const up = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(up.error || "画像を送信できませんでした");
+        image = up.key;
+      }
+      await api("/api/posts", { method: "POST", body: JSON.stringify({ body, image }) });
       input.value = "";
+      if (fileEl) { fileEl.value = ""; const pv = document.getElementById("boardPreview"); if (pv) pv.innerHTML = ""; }
       count.textContent = `0 / ${MAX}`;
       say("");
       await loadPosts();
@@ -171,6 +237,11 @@
     if (btn.dataset.act === "delete") {
       if (!confirm("この投稿を削除します。元に戻せません。")) return;
       try { await api(`/api/posts/${id}`, { method: "DELETE" }); await loadPosts(); }
+      catch (err) { say(err.message, true); }
+    }
+
+    if (btn.dataset.act === "pin") {
+      try { await api(`/api/posts/${id}/pin`, { method: "POST" }); await loadPosts(); }
       catch (err) { say(err.message, true); }
     }
 

@@ -20,5 +20,13 @@
     }
   ],
 
+  // 掲示板の画像保管（管理者の投稿のみ）。R2バケットを作ってから有効にする
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "sonsi-media"
+    }
+  ],
+
   "observability": { "enabled": true }
 }

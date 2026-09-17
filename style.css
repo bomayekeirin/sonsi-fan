@@ -851,3 +851,42 @@ body.is-loading .hero__scroll{
   border-bottom:1px solid var(--line);padding-bottom:2px}
 .head__back:hover{color:#fff}
 main#board{padding-top:calc(var(--head-h) + 44px)}
+
+/* ============================================================
+   掲示板：表示名・画像添付・固定投稿
+   ============================================================ */
+.board__rename{
+  font-size:10px;letter-spacing:.06em;color:var(--muted);
+  border-bottom:1px solid var(--line);padding-bottom:2px;margin-left:4px;
+}
+.board__rename:hover{color:#fff}
+
+.board__name{margin-top:16px;border:1px solid var(--line);padding:16px}
+.board__namelead{margin:0 0 12px;font-size:11px;color:var(--muted);line-height:1.9}
+.board__namerow{display:flex;gap:10px;align-items:stretch}
+.board__nameinput{
+  flex:1;min-width:0;background:transparent;color:#fff;border:1px solid var(--line);
+  padding:10px 12px;font:inherit;font-size:14px;font-weight:500;
+}
+.board__nameinput:focus{outline:none;border-color:#fff}
+.board__namerow .board__submit{margin-left:0;flex:none;padding:9px 18px}
+
+.board__uploadbox{display:flex;align-items:center;gap:12px;margin-top:10px;flex-wrap:wrap}
+.board__file{
+  font-size:11px;letter-spacing:.08em;color:var(--muted);cursor:pointer;
+  border:1px solid var(--line-strong);border-radius:999px;padding:7px 14px;
+  transition:background .2s,color .2s;
+}
+.board__file:hover{background:#fff;color:#000}
+.board__preview{display:flex;align-items:center;gap:8px;font-size:10px;color:var(--muted)}
+.board__preview img{width:34px;height:34px;object-fit:cover;display:block}
+
+.post.is-pinned{
+  border-left:2px solid #fff;padding-left:14px;position:relative;
+}
+.post__pin{
+  display:inline-block;font-family:var(--f-disp);font-size:10px;letter-spacing:.14em;
+  background:#fff;color:#000;padding:2px 8px;margin-bottom:9px;
+}
+.post__img{display:block;margin-top:11px;max-width:420px}
+.post__img img{width:100%;height:auto;display:block;border:1px solid var(--line)}
