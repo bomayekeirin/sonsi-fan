@@ -83,7 +83,7 @@ const LIVE = [
     venue:"お台場青海地区P区画",
     city:"TOKYO",
     note:"開場・開演 10:00",
-    img:"",
+    img:"live-circus.jpeg",
     url:"https://eplus.jp/sf/detail/2950550004-P0030012P021001?P1=0175"
   },
   {
