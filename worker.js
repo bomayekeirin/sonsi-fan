@@ -188,6 +188,10 @@ function handleLogin(name, env, url) {
     state
   });
 
+  // 毎回アカウントを選び直せるようにする。
+  // これが無いと、ログアウトしても前回のアカウントで自動的に入ってしまう
+  if (name === "google") params.set("prompt", "select_account");
+
   return new Response(null, {
     status: 302,
     headers: {
