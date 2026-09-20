@@ -94,8 +94,11 @@ discGrid.innerHTML = MUSIC.map((m,i) => `
   <button class="disc__card" data-i="${i}">
     <div class="disc__art">${m.art
       ? `<img src="${esc(m.art)}" alt="${esc(m.name)}">`
-      : `ARTWORK（仮）`}</div>
-    <p class="disc__name">${esc(m.name)}</p>
+      : `ARTWORK（仮）`}
+      ${m.badge ? `<span class="disc__badge">${esc(m.badge)}</span>` : ''}
+    </div>
+    <p class="disc__name">${esc(m.name)}${
+      m.release ? `<span class="disc__release">${esc(m.release)}</span>` : ''}</p>
     <p class="disc__sub">${esc(m.sub)}</p>
   </button>`).join('');
 
@@ -263,10 +266,12 @@ qaList.addEventListener('click', e => {
 // MUSIC モーダル
 const openModal = i => {
   const m = MUSIC[i];
-  modalArt.innerHTML = m.art
+  modalArt.innerHTML = (m.art
     ? `<img src="${esc(m.art)}" alt="${esc(m.name)}">`
-    : 'ARTWORK（仮）';
-  modalName.textContent = m.name;
+    : 'ARTWORK（仮）')
+    + (m.badge ? `<span class="disc__badge">${esc(m.badge)}</span>` : '');
+  modalName.innerHTML = esc(m.name)
+    + (m.release ? `<span class="disc__release">${esc(m.release)}</span>` : '');
   modalSub.textContent = m.sub;
 
   const tracks = (m.tracks || []).length
@@ -274,14 +279,22 @@ const openModal = i => {
     : '';
   modalBody.innerHTML = (m.note ? `<p class="modal__note">${esc(m.note)}</p>` : '') + tracks;
 
+  const inner = l => l.logo
+    ? `<img class="svc__logo" src="${esc(l.logo)}" alt="${esc(l.label)}">`
+    : `<span class="svc__name">${esc(l.label)}</span>`;
+
   modalLinks.innerHTML = `
-    <p class="modal__linkhead">配信中</p>
-    <div class="svc">${(m.links || []).map(l => `
-      <a class="svc__card" href="${l.url}" target="_blank" rel="noopener" aria-label="${esc(l.label)}で聴く">
-        ${l.logo
-          ? `<img class="svc__logo" src="${esc(l.logo)}" alt="${esc(l.label)}">`
-          : `<span class="svc__name">${esc(l.label)}</span>`}
-      </a>`).join('')}</div>`;
+    <p class="modal__linkhead">${m.soon ? '配信予定' : '配信中'}</p>
+    <div class="svc">${(m.links || []).map(l => (m.soon || !l.url)
+      ? `<span class="svc__card is-soon" aria-disabled="true"
+           aria-label="${esc(l.label)}（配信開始までお待ちください）">${inner(l)}</span>`
+      : `<a class="svc__card" href="${l.url}" target="_blank" rel="noopener"
+           aria-label="${esc(l.label)}で聴く">${inner(l)}</a>`).join('')}</div>
+    ${m.soon ? '<p class="svc__soonnote">配信開始後にリンクが有効になります。</p>' : ''}
+    ${m.embed ? `<div class="svc__embed">
+      <iframe src="${esc(m.embed)}" width="300" height="600" loading="lazy"
+        title="${esc(m.name)} の試聴・配信リンク"></iframe>
+    </div>` : ''}`;
   modal.classList.add('is-open');
   document.body.classList.add('is-locked');
   modalClose.focus();

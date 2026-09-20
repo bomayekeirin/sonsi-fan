@@ -890,3 +890,51 @@ main#board{padding-top:calc(var(--head-h) + 44px)}
 }
 .post__img{display:block;margin-top:11px;max-width:420px}
 .post__img img{width:100%;height:auto;display:block;border:1px solid var(--line)}
+
+/* ============================================================
+   ディスコグラフィー：新譜バッジ・配信予定
+   ============================================================ */
+.disc__art,.modal__art{position:relative}
+
+.disc__badge{
+  position:absolute;top:8px;left:8px;z-index:2;
+  font-family:var(--f-disp);font-size:11px;letter-spacing:.12em;line-height:1;
+  color:#0a1a0a;background:#7cff3f;
+  padding:6px 10px 5px;border-radius:3px;
+  animation:badgeBlink 1.6s ease-in-out infinite;
+}
+@keyframes badgeBlink{
+  0%,100%{
+    opacity:1;
+    box-shadow:0 0 6px #7cff3f, 0 0 16px rgba(124,255,63,.85), 0 0 34px rgba(124,255,63,.5);
+  }
+  50%{
+    opacity:.55;
+    box-shadow:0 0 3px rgba(124,255,63,.7), 0 0 8px rgba(124,255,63,.35), 0 0 16px rgba(124,255,63,.2);
+  }
+}
+
+.disc__release{
+  display:inline-block;margin-left:8px;
+  font-family:var(--f-body);font-size:11px;font-weight:700;letter-spacing:.02em;
+  color:#ff4242;vertical-align:middle;
+}
+
+/* 配信前のサービスカード */
+.svc__card.is-soon{
+  opacity:.34;filter:grayscale(1);cursor:default;pointer-events:none;
+}
+.svc__soonnote{
+  margin:12px 0 0;font-size:10px;color:var(--muted);letter-spacing:.02em;
+}
+
+/* 動きを減らす設定の端末では点滅させない */
+@media (prefers-reduced-motion:reduce){
+  .disc__badge{animation:none;box-shadow:0 0 8px rgba(124,255,63,.7)}
+}
+
+/* リリース情報の埋め込みプレイヤー */
+.svc__embed{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+.svc__embed iframe{
+  width:100%;max-width:300px;height:600px;border:0;display:block;margin:0 auto;
+}

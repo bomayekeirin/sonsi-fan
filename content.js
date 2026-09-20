@@ -14,6 +14,7 @@ const SNS = [
    cat … RELEASE / LIVE / VIDEO / MEDIA / 出演 / SITE
    url … 記事のURL。空にするとリンクなしで表示されます */
 const NEWS = [
+  {date:"2026.09.20", cat:"RELEASE", title:"新作EP「FUSUMA」を9月23日に配信リリース。「FUSUMA」「H2O Daddy」の2曲を収録", url:"https://linkco.re/6u9H6Yur"},
   {date:"2026.09.17", cat:"出演", title:"10月4日に北九州で開催される「PLAYGROUND」に出演。会場はJ:COM北九州芸術劇場 大ホール", url:"https://livepocket.jp/e/playground"},
   {date:"2026.08.28", cat:"出演", title:"「CIRCUS × CIRCUS ODAIBA」追加出演者が発表。Sonsiを含む全17組のラインナップが確定", url:"https://news.yahoo.co.jp/articles/53b6913d8955b5255f5fa7f4dfcbef7eded7e8e1"},
   {date:"2026.08.26", cat:"出演", title:"「SPOOKY PUMPKIN 2026」出演アーティスト第2弾が発表。Sonsiを含む全74組が出そろう", url:"https://news.yahoo.co.jp/articles/1d3d0db3968497cf41b56206f5ee40786d2e8833"},
@@ -25,6 +26,27 @@ const NEWS = [
 ];
 
 const MUSIC = [
+  {
+    name: "FUSUMA",
+    sub: "EP / 2026.09.23",
+    art: "jk-fusuma.jpeg",
+    badge: "NEW",                 // ジャケット左上に光るバッジを出す
+    release: "9/23配信開始",       // タイトル横に赤字で添える
+    soon: true,                   // 配信リンクをグレーアウトして押せなくする
+    note: "CYPHER STAGEで披露された「FUSUMA」を収録。",
+    embed: "https://linkco.re/embed/6u9H6Yur",   // 試聴・各ストアへのリンク
+    tracks: [
+      "FUSUMA",
+      "H2O Daddy"
+    ],
+    links: [
+      {label:"Apple Music",   logo:"svc-applemusic.png", url:""},
+      {label:"Spotify",       logo:"svc-spotify.png",    url:""},
+      {label:"LINE MUSIC",    logo:"svc-linemusic.png",  url:""},
+      {label:"Amazon Music",  logo:"svc-amazon.png",     url:""},
+      {label:"YouTube Music", logo:"svc-ytmusic.png",    url:""}
+    ]
+  },
   {
     name: "ニセモノ",
     sub: "1st Album / 2026.06.10",
