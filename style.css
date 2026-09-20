@@ -938,3 +938,17 @@ main#board{padding-top:calc(var(--head-h) + 44px)}
 .svc__embed iframe{
   width:100%;max-width:300px;height:600px;border:0;display:block;margin:0 auto;
 }
+
+/* ニュースのNEW表示（日付の左、文字のみ） */
+.news__new{
+  font-family:var(--f-disp);font-size:11px;letter-spacing:.14em;line-height:1;
+  color:#7cff3f;margin-right:9px;
+  animation:newsNewBlink 1.6s ease-in-out infinite;
+}
+@keyframes newsNewBlink{
+  0%,100%{opacity:1;text-shadow:0 0 6px rgba(124,255,63,.9), 0 0 16px rgba(124,255,63,.5)}
+  50%    {opacity:.4;text-shadow:0 0 3px rgba(124,255,63,.4)}
+}
+@media (prefers-reduced-motion:reduce){
+  .news__new{animation:none}
+}

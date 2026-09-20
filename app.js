@@ -77,9 +77,18 @@ if (igRail && typeof SOCIAL_POSTS !== 'undefined') {
 }
 
 // NEWS
+// 7日以内の記事にNEWを出す（content.js 側で isNew:true を書けば手動でも出せる）
+const NEWS_NEW_DAYS = 7;
+const isFreshNews = n => {
+  if (n.isNew === true) return true;
+  const t = Date.parse((n.date || '').replace(/\./g, '-'));
+  return !isNaN(t) && Date.now() - t < NEWS_NEW_DAYS * 86400000;
+};
+
 newsList.innerHTML = NEWS.map(n => {
   const inner = `
     <div class="news__meta">
+      ${isFreshNews(n) ? '<span class="news__new">NEW</span>' : ''}
       <span class="news__date">${esc(n.date)}</span>
       <span class="news__cat">${esc(n.cat)}</span>
     </div>
