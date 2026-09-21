@@ -898,14 +898,22 @@ main#board{padding-top:calc(var(--head-h) + 44px)}
 
 .disc__badge{
   position:absolute;top:-11px;left:-11px;z-index:3;
-  font-family:var(--f-disp);font-size:13px;letter-spacing:.2em;line-height:1;
-  color:#fff;background:#8dff3a;
+  font-family:var(--f-disp);font-size:15px;letter-spacing:.2em;line-height:1;
+  color:#000;background:#8dff3a;
   /* 字間の分だけ右の余白を詰めて、文字を中央に見せる */
   padding:6px 8px 5px 10px;border-radius:3px;
   animation:badgeBlink 1.6s ease-in-out infinite;
 }
 /* 文字の内側に影を落とし、刻まれたように見せる（SVGフィルター #badgeInset） */
-.disc__badge-txt{display:block;filter:url(#badgeInset)}
+.disc__badge-txt{
+  display:block;filter:url(#badgeInset);
+  /* バッジの点滅と同じ周期で、明るいときはグレー寄り・暗いときは真っ黒 */
+  animation:badgeTxt 1.6s ease-in-out infinite;
+}
+@keyframes badgeTxt{
+  0%,100%{color:#555}
+  50%    {color:#000}
+}
 
 @keyframes badgeBlink{
   0%,100%{
@@ -935,6 +943,7 @@ main#board{padding-top:calc(var(--head-h) + 44px)}
 /* 動きを減らす設定の端末では点滅させない */
 @media (prefers-reduced-motion:reduce){
   .disc__badge{animation:none;box-shadow:0 0 6px rgba(141,255,58,.6)}
+  .disc__badge-txt{animation:none;color:#222}
 }
 
 /* リリース情報の埋め込みプレイヤー */
