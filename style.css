@@ -898,19 +898,25 @@ main#board{padding-top:calc(var(--head-h) + 44px)}
 
 .disc__badge{
   position:absolute;top:8px;left:8px;z-index:2;
-  font-family:var(--f-disp);font-size:11px;letter-spacing:.12em;line-height:1;
-  color:#0a1a0a;background:#7cff3f;
-  padding:6px 10px 5px;border-radius:3px;
+  font-family:var(--f-disp);font-size:14px;letter-spacing:.12em;line-height:1;
+  color:#fff;background:#8dff3a;
+  padding:7px 11px 6px;border-radius:3px;
+  /* 文字が凹んで見えるように：上側に濃い影、下側に淡い光 */
+  text-shadow:
+    0 -1px 0 rgba(0,0,0,.78),
+    -1px -1px 1px rgba(0,0,0,.55),
+    0 -2px 3px rgba(0,0,0,.35),
+    0 1px 0 rgba(255,255,255,.55);
   animation:badgeBlink 1.6s ease-in-out infinite;
 }
 @keyframes badgeBlink{
   0%,100%{
     opacity:1;
-    box-shadow:0 0 6px #7cff3f, 0 0 16px rgba(124,255,63,.85), 0 0 34px rgba(124,255,63,.5);
+    box-shadow:0 0 4px #8dff3a, 0 0 10px rgba(141,255,58,.7), 0 0 18px rgba(141,255,58,.35);
   }
   50%{
     opacity:.55;
-    box-shadow:0 0 3px rgba(124,255,63,.7), 0 0 8px rgba(124,255,63,.35), 0 0 16px rgba(124,255,63,.2);
+    box-shadow:0 0 2px rgba(141,255,58,.6), 0 0 6px rgba(141,255,58,.3), 0 0 10px rgba(141,255,58,.15);
   }
 }
 
@@ -930,7 +936,7 @@ main#board{padding-top:calc(var(--head-h) + 44px)}
 
 /* 動きを減らす設定の端末では点滅させない */
 @media (prefers-reduced-motion:reduce){
-  .disc__badge{animation:none;box-shadow:0 0 8px rgba(124,255,63,.7)}
+  .disc__badge{animation:none;box-shadow:0 0 6px rgba(141,255,58,.6)}
 }
 
 /* リリース情報の埋め込みプレイヤー */
@@ -942,12 +948,12 @@ main#board{padding-top:calc(var(--head-h) + 44px)}
 /* ニュースのNEW表示（日付の左、文字のみ） */
 .news__new{
   font-family:var(--f-disp);font-size:11px;letter-spacing:.14em;line-height:1;
-  color:#7cff3f;margin-right:9px;
+  color:#8dff3a;margin-right:9px;
   animation:newsNewBlink 1.6s ease-in-out infinite;
 }
 @keyframes newsNewBlink{
-  0%,100%{opacity:1;text-shadow:0 0 6px rgba(124,255,63,.9), 0 0 16px rgba(124,255,63,.5)}
-  50%    {opacity:.4;text-shadow:0 0 3px rgba(124,255,63,.4)}
+  0%,100%{opacity:1;text-shadow:0 0 4px rgba(141,255,58,.85), 0 0 10px rgba(141,255,58,.4)}
+  50%    {opacity:.4;text-shadow:0 0 2px rgba(141,255,58,.35)}
 }
 @media (prefers-reduced-motion:reduce){
   .news__new{animation:none}
