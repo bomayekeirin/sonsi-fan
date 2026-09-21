@@ -104,7 +104,7 @@ discGrid.innerHTML = MUSIC.map((m,i) => `
     <div class="disc__art">${m.art
       ? `<img src="${esc(m.art)}" alt="${esc(m.name)}">`
       : `ARTWORK（仮）`}
-      ${m.badge ? `<span class="disc__badge">${esc(m.badge)}</span>` : ''}
+      ${m.badge ? `<span class="disc__badge"><span class="disc__badge-txt">${esc(m.badge)}</span></span>` : ''}
     </div>
     <p class="disc__name">${esc(m.name)}${
       m.release ? `<span class="disc__release">${esc(m.release)}</span>` : ''}</p>
@@ -278,7 +278,7 @@ const openModal = i => {
   modalArt.innerHTML = (m.art
     ? `<img src="${esc(m.art)}" alt="${esc(m.name)}">`
     : 'ARTWORK（仮）')
-    + (m.badge ? `<span class="disc__badge">${esc(m.badge)}</span>` : '');
+    + (m.badge ? `<span class="disc__badge"><span class="disc__badge-txt">${esc(m.badge)}</span></span>` : '');
   modalName.innerHTML = esc(m.name)
     + (m.release ? `<span class="disc__release">${esc(m.release)}</span>` : '');
   modalSub.textContent = m.sub;
