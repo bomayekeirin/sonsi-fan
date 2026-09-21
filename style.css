@@ -898,10 +898,10 @@ main#board{padding-top:calc(var(--head-h) + 44px)}
 
 .disc__badge{
   position:absolute;top:-11px;left:-11px;z-index:3;
-  font-family:var(--f-disp);font-size:15px;letter-spacing:.2em;line-height:1;
+  font-family:var(--f-disp);font-size:14px;letter-spacing:.2em;line-height:1;
   color:#000;background:#8dff3a;
   /* 字間の分だけ右の余白を詰めて、文字を中央に見せる */
-  padding:6px 8px 5px 10px;border-radius:3px;
+  padding:5px 4px 4px 7px;border-radius:3px;
   animation:badgeBlink 1.6s ease-in-out infinite;
 }
 /* 文字の内側に影を落とし、刻まれたように見せる（SVGフィルター #badgeInset） */
