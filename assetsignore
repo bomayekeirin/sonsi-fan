@@ -18,3 +18,5 @@ wrangler.toml
 schema.sql
 README.md
 SETUP-auth.md
+sonsi-status.md
+migrate-01.sql
