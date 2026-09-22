@@ -111,7 +111,7 @@ Sonsi 非公式ファンサイト（sonsi-fan.site）の現状と経緯の記録
 | `kv-main.jpeg` / `artist-main.jpeg` | キービジュアル / ABOUT |
 | `bg-skull.png` | ヒーロー背景のドクロ柄タイル（1280×768、逆さドクロ混在版） |
 | `jk-fusuma.jpeg` / `jk-nisemono.jpeg` / `jk-bbaspice.jpeg` | ジャケット |
-| `live-playground.jpeg` / `live-circus.jpeg` / `live-honmono.jpeg` | LIVEのフライヤー |
+| `live-xx.jpeg` / `live-playground.jpeg` / `live-circus.jpeg` / `live-honmono.jpeg` | LIVEのフライヤー |
 | `ogp.jpeg` | トップのシェア画像（1200×630） |
 | `ogp-board.jpeg` | 掲示板のシェア画像（1200×630） |
 | `favicon.png` / `apple-touch-icon.png` / `icon-192.png` / `icon-512.png` | アイコン（黒地にSonsiロゴ＋unofficial fansite） |
@@ -188,15 +188,15 @@ Sonsi 非公式ファンサイト（sonsi-fan.site）の現状と経緯の記録
 |---|---|
 | SNS | Instagram @ta_sonsi / X @takenakasonsi__ / TikTok @sonsi1230 / YouTube @takenakasonsi / Spotify / Apple Music |
 | MUSIC | FUSUMA（EP、配信前）/ ニセモノ（1st Album 2026.06.10、全8曲）/ BBA Spice（Single 2026.07.29、Sonsi & STUTS） |
-| LIVE | 2026-10-04 PLAYGROUND（北九州）/ 2026-09-23 CIRCUS × CIRCUS ODAIBA / 2026-07-08 単独公演『ホンモノ』（終了） |
-| NEWS | 9件（最新 2026.09.20 FUSUMA） |
+| LIVE | 2026-11-26 〈XX〉BABYWOODROSE / Sonsi（WWW X）/ 2026-10-04 PLAYGROUND（北九州）/ 2026-09-23 CIRCUS × CIRCUS ODAIBA / 2026-07-08 単独公演『ホンモノ』（終了） |
+| NEWS | 10件（最新 2026.09.20 FUSUMA） |
 | VIDEOS | YouTube 9本（日付降順に自動ソート） |
 | SOCIAL_POSTS | Instagram 18件 + TikTok 7件（日付順に混合） |
 | Q&A | 4項目 |
 
 ### データの書き方
 
-**NEWS**（上ほど新しい。タグは RELEASE / LIVE / VIDEO / MEDIA / 出演 / SITE）
+**NEWS**（**配列の順に表示される。日付で自動ソートされないので、日付順の位置に挿入する**。タグは RELEASE / LIVE / VIDEO / MEDIA / 出演 / SITE）
 ```js
 {date:"2026.09.20", cat:"出演", title:"見出し", url:"https://..."},
 ```
@@ -316,6 +316,10 @@ SELECT name FROM pragma_table_info('posts');
   - `badge:"NEW"` はしばらく残すか相談して決める
   - 埋め込み（linkco.re）は向こう側で自動的に切り替わる
 
+### 要確認
+- [ ] **〈XX〉11/26 の開場・開演時刻**：フライヤーは OPEN 18:30 / START 19:30、WWW公式ページは 19:00 / 20:00 と食い違っている。現在はフライヤーの時刻で掲載中
+- [ ] **〈XX〉のNEWS日付**：公式の発表日が未確認。先行受付の開始日（2026-09-18）で仮置き
+
 ### 保留
 - [ ] **ABOUT のプロフィール本文**：公式プロフィール文が届くまで保留
   - ASD・ADHD の公表について：本人が番組内で公表し「自虐が俺の美学」と表現の核にしている。書く場合は属性紹介ではなく「自ら公表し表現に変えている」順序で。障害等級は記載しない
@@ -341,6 +345,7 @@ SELECT name FROM pragma_table_info('posts');
 
 | 日付 | 内容 |
 |---|---|
+| 2026-09-22 | LIVE・NEWS に〈XX〉BABYWOODROSE / Sonsi（2026-11-26 WWW X）を追加 |
 | 2026-09-21 | `sonsi-status.md` を作成（0→1 完了時点の記録） |
 | 2026-09-21 | テーマカラーを白・黒・#8dff3a に決定。緑を CSS 変数 `--accent` に集約 |
 | 2026-09-21 | NEW バッジを調整（黒文字・点滅連動の濃淡・SVG による凹み文字・角に半分乗る位置）。NEWS に NEW 表示（7日以内） |

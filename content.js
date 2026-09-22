@@ -15,6 +15,7 @@ const SNS = [
    url … 記事のURL。空にするとリンクなしで表示されます */
 const NEWS = [
   {date:"2026.09.20", cat:"RELEASE", title:"新作EP「FUSUMA」を9月23日に配信リリース。「FUSUMA」「H2O Daddy」の2曲を収録", url:"https://linkco.re/6u9H6Yur"},
+  {date:"2026.09.18", cat:"LIVE", title:"BABYWOODROSEとSonsi、2人のジョーカーが〈XX〉で初2マン", url:"https://www-shibuya.jp/schedule/020087.php"},
   {date:"2026.09.17", cat:"出演", title:"10月4日に北九州で開催される「PLAYGROUND」に出演。会場はJ:COM北九州芸術劇場 大ホール", url:"https://livepocket.jp/e/playground"},
   {date:"2026.08.28", cat:"出演", title:"「CIRCUS × CIRCUS ODAIBA」追加出演者が発表。Sonsiを含む全17組のラインナップが確定", url:"https://news.yahoo.co.jp/articles/53b6913d8955b5255f5fa7f4dfcbef7eded7e8e1"},
   {date:"2026.08.26", cat:"出演", title:"「SPOOKY PUMPKIN 2026」出演アーティスト第2弾が発表。Sonsiを含む全74組が出そろう", url:"https://news.yahoo.co.jp/articles/1d3d0db3968497cf41b56206f5ee40786d2e8833"},
@@ -90,6 +91,15 @@ const MUSIC = [
    img  … フライヤー画像。不要なら空文字
    url  … チケットや詳細ページ。不要なら空文字 */
 const LIVE = [
+  {
+    date:"2026-11-26",
+    title:"WWW & WWW X Anniversaries〈XX〉BABYWOODROSE / Sonsi",
+    venue:"WWW X",
+    city:"TOKYO",
+    note:"開場 18:30 / 開演 19:30・先行抽選 9/25(金) 23:59まで",
+    img:"live-xx.jpeg",
+    url:"https://www-shibuya.jp/schedule/020087.php"
+  },
   {
     date:"2026-10-04",
     title:"PLAYGROUND",
